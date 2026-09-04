@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Paleta oficial Cinemorfosis */
+  --ink: #000000;        /* Negro — texto principal y contornos */
+  --secondary: #700000;  /* Burdeos Profundo — bordes, sombras, texto secundario */
+  --primary: #CD1A0B;    /* Rojo Vibrante — botones e interacciones */
+  --bg: #FFFFF6;         /* Off-White — fondo principal */
+  --surface: #FFFFFF;    /* blanco puro — superficie de inputs */
+  --adv: #FFC33F;        /* acento ámbar — detalles de boleto */
+  --ok: #90E1FF;
+  --info: #E0D2C9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 620px;
+  background: var(--bg);
+  box-shadow: 0 0 0 3px var(--primary), 0 25px 60px rgba(0, 0, 0, 0.18);
+  border-radius: 28px;
+  padding: 40px 34px 30px;
+  overflow: hidden;
+}
+
+/* Perforación estilo boleto de cine, arriba y abajo de la tarjeta */
+.film-strip {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 14px;
+  background: var(--ink);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--bg) 0 8px,
+    transparent 8px 20px
+  );
+  background-position: 10px center;
+  z-index: 5;
+}
+.film-strip--top { top: 0; }
+.film-strip--bottom { bottom: 0; }
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  transition: 1s ease-in-out;
+}
+.wrapper.active .form-wrapper.sign-in {
+  transform: translateY(-620px);
+}
+.wrapper .form-wrapper.sign-up {
+  position: absolute;
+  top: 620px;
+  left: 0;
+}
+.wrapper.active .form-wrapper.sign-up {
+  transform: translateY(-620px);
+}
+.wrapper.active .form-wrapper.olvidastecontraseña {
+  transform: translateY(-620px);
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo centrado y responsivo */
+.brand-logo {
+  display: block;
+  width: 78%;
+  max-width: 260px;
+  height: auto;
+  margin: 4px auto 22px;
+}
+
+/* Inputs redondeados, limpios, sobre fondo Off-White */
+.input-group {
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+}
+.input-group input {
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  color: var(--ink);
+  padding: 0 22px;
+  background: var(--surface);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  outline: none;
+  box-shadow: 0 4px 14px rgba(112, 0, 0, 0.10);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.input-group input::placeholder { color: transparent; }
+.input-group input:focus,
+.input-group input:valid {
+  border-color: var(--primary);
+  box-shadow: 0 4px 16px rgba(205, 26, 11, 0.16);
+}
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 22px;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: var(--secondary);
+  pointer-events: none;
+  transition: .2s ease;
+}
+.input-group input:focus~label,
+.input-group input:valid~label {
+  top: -9px;
+  left: 16px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--bg);
+  padding: 0 8px;
+}
+
+.remember {
+  width: 100%;
+  margin: 6px 0 22px;
+  text-align: center;
+}
+.remember label {
+  color: var(--secondary);
+  font-size: 12.5px;
+}
+.remember label input {
+  accent-color: var(--primary);
+  margin-right: 4px;
+}
+
+/* Botón de acción: cuadrado, centrado, con flecha en color contrastante */
+.cta {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  box-shadow: 0 6px 0 var(--secondary);
+  color: var(--bg);
+  border-radius: 18px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.cta:hover {
+  background: var(--secondary);
+}
+.cta:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--secondary);
+}
+.cta-arrow {
+  width: 24px;
+  height: 24px;
+}
+
+.signUp-link {
+  font-size: 13px;
+  text-align: center;
+  margin: 16px 0 0;
+}
+.signUp-link p { color: var(--ink); }
+.signUp-link p a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.signUp-link p a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+@media (max-width: 420px) {
+  .wrapper {
+    height: 600px;
+    padding: 34px 24px 26px;
+    border-radius: 22px;
+  }
+  .wrapper .form-wrapper.sign-up { top: 600px; }
+  .wrapper.active .form-wrapper.sign-in,
+  .wrapper.active .form-wrapper.sign-up {
+    transform: translateY(-600px);
+  }
+  .brand-logo { max-width: 220px; }
+}
+
+
+
+.signUp-link-olvidastecontraseña {
+   color: var(--primary);
+  text-decoration: none;
+    font-size: 11.5px;
+  text-align: center;
+  margin: 16px 0 0;
+}
+ .wrapper .form-wrapper.olvidastecontraseña{ top: 600px; }
+ .wrapper.active .form-wrapper.sign-up,
+  .wrapper.active .form-wrapper.olvidastecontraseña {
+    transform: translateY(-600px);
+  }
+  .brand-logo { max-width: 220px; }

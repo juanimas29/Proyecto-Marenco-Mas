@@ -227,8 +227,8 @@ form {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--primary);
-  box-shadow: 0 6px 0 var(--secondary);
+  background: var(--secondary);
+  box-shadow: 0 6px 0 var(--ink);
   color: var(--bg);
   border-radius: 18px;
   border: none;
@@ -238,17 +238,34 @@ form {
 }
 
 .cta:hover {
-  background: var(--secondary);
+  background: var(--primary);
 }
 
 .cta:active {
   transform: translateY(4px);
-  box-shadow: 0 2px 0 var(--secondary);
+  box-shadow: 0 2px 0 var(--ink);
 }
 
 .cta-arrow {
   width: 24px;
   height: 24px;
+}
+.cta--text {
+  width: auto;
+  min-width: 56px;
+  height: 52px;
+  padding: 0 26px;
+  gap: 10px;
+  border-radius: 999px;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 14.5px;
+  letter-spacing: .2px;
+}
+
+.cta--text .cta-arrow {
+  width: 18px;
+  height: 18px;
 }
 
 .signUp-link {

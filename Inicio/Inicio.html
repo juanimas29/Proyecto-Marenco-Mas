@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Carga de Ionicons v7 actualizada -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Cinemorfosis</title>
+    <link rel="stylesheet" type="text/css" href="Inicio.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="film-strip film-strip--top" aria-hidden="true"></div>
+
+      <div class="hero-topbar">
+        <button type="button" class="location-chip">
+          <ion-icon name="location-outline"></ion-icon>
+          <span>Córdoba, Arg.</span>
+        </button>
+
+        <img class="hero-logo" src="../Imagenes/Logo Cinemorfosis Blanco.png" alt="Cinemorfosis" />
+
+        <div class="user-menu">
+          <button
+            type="button"
+            class="avatar-btn"
+            id="avatarBtn"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </button>
+          <div class="avatar-dropdown" id="avatarDropdown">
+            <a href="#"><ion-icon name="person-outline"></ion-icon> Mi perfil</a>
+            <a href="#"><ion-icon name="ticket-outline"></ion-icon> Mis tickets</a>
+            <a href="../Login/Login.html" class="logout"
+              ><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <h1>Todo el cine, en un solo lugar.</h1>
+        <p>
+          Buscá funciones, descubrí películas y enterate de los seminarios
+          que se vienen en tu ciudad.
+        </p>
+
+        <form class="search-bar" action="#">
+          <ion-icon name="search-outline" class="search-icon"></ion-icon>
+          <input type="text" placeholder="¿Qué película querés ver?" />
+          <button type="submit" class="search-btn">
+            Buscar
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M4 12h15M13 6l6 6-6 6"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="film-strip film-strip--bottom" aria-hidden="true"></div>
+    </header>
+
+    <main>
+      <section class="hub" aria-label="Secciones principales">
+        <a class="hub-card" href="../Inicio/Cine/Cine.html">
+          <div class="hub-card-icon"><img src="../Imagenes/Cine.png" alt="Cine">
+            <ion-icon name="film-outline"></ion-icon>
+          </div>
+          <div class="hub-card-tear" aria-hidden="true"></div>
+          <div class="hub-card-body">
+            <h2>Cine</h2>
+            <p>
+              Elegí una película, mirá los horarios de las salas más
+              cercanas y reservá tus asientos.
+            </p>
+          </div>
+        </a>
+
+        <a class="hub-card" href="../Inicio/Peliculas/Peliculas.html">
+          <div class="hub-card-icon"><img src="../Imagenes/Films.png" alt="Películas">
+            <ion-icon name="albums-outline"></ion-icon>
+          </div>
+          <div class="hub-card-tear" aria-hidden="true"></div>
+          <div class="hub-card-body">
+            <h2>Películas</h2>
+            <p>
+              Filtrá por título, género o plataforma, y descubrí
+              recomendaciones a tu medida.
+            </p>
+          </div>
+        </a>
+
+        <a class="hub-card" href="../Inicio/Seminarios/Seminarios.html">
+         <div class="hub-card-icon"><img src="../Imagenes/Seminarios.png" alt="Seminarios">
+            <ion-icon name="school-outline"></ion-icon>
+          </div>
+          <div class="hub-card-tear" aria-hidden="true"></div>
+          <div class="hub-card-body">
+            <h2>Seminarios</h2>
+            <p>
+              Enterate qué charlas y seminarios de cine se dictan en tu
+              ciudad, con todos los detalles.
+            </p>
+          </div>
+        </a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="film-strip film-strip--top" aria-hidden="true"></div>
+      <p>Cinemorfosis · Hecho por cinéfilos, para cinéfilos</p>
+    </footer>
+
+    <script src="Inicio.js"></script>
+  </body>
+</html>

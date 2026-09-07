@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Cine | Cinemorfosis</title>
+    <link rel="stylesheet" type="text/css" href="../Inicio.css" />
+  </head>
+  <body>
+    <div class="subpage-header">
+      <a href="../Inicio.html" class="back-btn" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <img src="../../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
+      <h1>Cine</h1>
+
+      <div class="user-menu" style="margin-left: auto;">
+        <button type="button" class="avatar-btn" id="avatarBtn" aria-haspopup="true" aria-expanded="false">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </button>
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <a href="#"><ion-icon name="person-outline"></ion-icon> Mi perfil</a>
+          <a href="#"><ion-icon name="ticket-outline"></ion-icon> Mis tickets</a>
+          <a href="../../Login/Login.html" class="logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="construction">
+      <div class="construction-icon"><ion-icon name="film-outline"></ion-icon></div>
+      <h2>Buscá tu función</h2>
+      <p>
+        Acá vas a poder elegir una película, ver los horarios y salas
+        más cercanas según tu ubicación, chequear qué asientos quedan
+        libres y gestionar tus tickets. Sección en construcción.
+      </p>
+    </div>
+
+    <section class="cine-map">
+      <div class="cine-map-heading">
+        <h2>Complejos de cine cerca tuyo</h2>
+        <p>
+          Explorá el mapa con todos los complejos de cine de Córdoba
+          que tenemos cargados: Mirá dónde queda cada complejo y elegí el más cómodo para vos.
+        </p>
+      </div>
+      <div class="cine-map-frame">
+        <iframe
+          src="https://www.google.com/maps/d/embed?mid=11uGjHHoDv7Go9yRqHnN7wFYBlm_ZYao&hl=es&ll=-31.406837941909863%2C-64.2224273321835&z=12"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mapa de complejos de cine en Córdoba"
+        ></iframe>
+      </div>
+      <a
+        class="cine-map-link"
+        href="https://www.google.com/maps/d/edit?hl=es&mid=11uGjHHoDv7Go9yRqHnN7wFYBlm_ZYao&ll=-31.406837941909863%2C-64.2224273321835&z=12"
+        target="_blank"
+        rel="noopener"
+      >
+        <ion-icon name="expand-outline"></ion-icon>
+        Ver mapa completo en Google Maps
+      </a>
+    </section>
+
+    <footer class="site-footer">
+      <div class="film-strip film-strip--top" aria-hidden="true"></div>
+      <p>Cinemorfosis · Hecho por cinéfilos, para cinéfilos</p>
+    </footer>
+
+    <script src="../Inicio.js"></script>
+  </body>
+</html>

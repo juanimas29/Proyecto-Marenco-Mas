@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Paleta oficial Cinemorfosis */
+  --ink: #000000;        /* Negro — texto principal y contornos */
+  --secondary: #700000;  /* Burdeos Profundo — bordes, sombras, texto secundario */
+  --primary: #CD1A0B;    /* Rojo Vibrante — botones e interacciones */
+  --bg: #FFFFF6;         /* Off-White — fondo principal */
+  --surface: #FFFFFF;    /* blanco puro — superficie de inputs */
+  --adv: #FFC33F;        /* acento ámbar — detalles de boleto */
+  --error: #B3261E;
+  --ok: #90E1FF;
+  --info: #E0D2C9;
+  --card-h: 660px;       /* alto de UN panel — única fuente de verdad para las 3 vistas */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: var(--card-h);
+  background: var(--bg);
+  box-shadow: 0 0 0 3px var(--primary), 0 25px 60px rgba(0, 0, 0, 0.18);
+  border-radius: 28px;
+  padding: 40px 34px 30px;
+  overflow: hidden;
+}
+
+/* Perforación estilo boleto de cine, arriba y abajo de la tarjeta */
+.film-strip {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 14px;
+  background: var(--ink);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--bg) 0 8px,
+    transparent 8px 20px
+  );
+  background-position: 10px center;
+  z-index: 5;
+}
+.film-strip--top { top: 0; }
+.film-strip--bottom { bottom: 0; }
+
+.track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 1s ease-in-out;
+}
+.wrapper[data-view="signin"]  .track { transform: translateY(0); }
+.wrapper[data-view="signup"]  .track { transform: translateY(calc(-1 * var(--card-h))); }
+.wrapper[data-view="forgot"]  .track { transform: translateY(calc(-2 * var(--card-h))); }
+
+.form-wrapper {
+  flex: 0 0 var(--card-h);
+  width: 100%;
+  height: var(--card-h);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brand-logo {
+  display: block;
+  width: 78%;
+  max-width: 260px;
+  height: auto;
+  margin: 4px auto 22px;
+}
+
+.panel-hint {
+  color: var(--secondary);
+  font-size: 13px;
+  font-weight: 500;
+  margin: -10px 0 18px;
+}
+
+/* Inputs y estructura */
+.input-group {
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 20px;
+  font-size: 20px;
+  color: var(--secondary);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.input-group input {
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  color: var(--ink);
+  padding: 0 48px 0 48px;
+  background: var(--surface);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  outline: none;
+  box-shadow: 0 4px 14px rgba(112, 0, 0, 0.10);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.input-group input::placeholder { color: transparent; }
+
+.input-group input:focus,
+.input-group input:not(:placeholder-shown) {
+  border-color: var(--primary);
+  box-shadow: 0 4px 16px rgba(205, 26, 11, 0.16);
+}
+
+.input-group input:focus ~ .input-icon,
+.input-group input:not(:placeholder-shown) ~ .input-icon {
+  color: var(--primary);
+}
+
+.input-group label {
+  position: absolute;
+  left: 48px;
+  font-size: 15px;
+  color: var(--secondary);
+  pointer-events: none;
+  transition: .2s ease;
+  z-index: 2;
+}
+
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+  top: -9px;
+  left: 16px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--bg);
+  padding: 0 8px;
+}
+
+/* Ícono Ojo */
+.toggle-password {
+  position: absolute;
+  right: 18px;
+  font-size: 22px;
+  color: var(--secondary);
+  cursor: pointer;
+  z-index: 3;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: var(--primary);
+}
+
+.remember {
+  width: 100%;
+  margin: 6px 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.remember label {
+  color: var(--secondary);
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.remember label input {
+  accent-color: var(--primary);
+  margin-right: 4px;
+}
+
+.forgot-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.forgot-link:hover { text-decoration: underline; }
+
+.form-message {
+  min-height: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  margin: -6px 0 14px;
+}
+.form-message.error { color: var(--error); }
+.form-message.success { color: var(--secondary); }
+
+.cta {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  box-shadow: 0 6px 0 var(--secondary);
+  color: var(--bg);
+  border-radius: 18px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.cta:hover {
+  background: var(--secondary);
+}
+
+.cta:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--secondary);
+}
+
+.cta-arrow {
+  width: 24px;
+  height: 24px;
+}
+
+.signUp-link {
+  font-size: 13px;
+  text-align: center;
+  margin: 16px 0 0;
+}
+
+.signUp-link p { color: var(--ink); }
+
+.signUp-link p a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signUp-link p a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+@media (max-width: 420px) {
+  :root { --card-h: 640px; }
+  .wrapper {
+    padding: 34px 24px 26px;
+    border-radius: 22px;
+  }
+  .brand-logo { max-width: 220px; }
+}

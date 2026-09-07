@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  
+  <!-- Carga de Ionicons v7 actualizada -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  
+  <title>Iniciar sesión | Cinemorfosis</title>
+  <link rel="stylesheet" type="text/css" href="Login.css">
+</head>
+
+<body>
+  <div class="wrapper" data-view="signin"> 
+
+    <div class="film-strip film-strip--top" aria-hidden="true"></div> 
+
+    <div class="track">
+
+      <!-- ===== LOGIN ===== -->
+      <div class="form-wrapper sign-in">
+        <form id="signInForm">
+          <img class="brand-logo" src="../Imagenes/Logo Cinemorfosis.png" alt="Cinemorfosis">
+
+          <div class="input-group">
+            <ion-icon name="person-outline" class="input-icon"></ion-icon>
+            <input type="text" id="signInUser" placeholder=" " required>
+            <label>Usuario</label>
+          </div>
+          
+          <div class="input-group">
+            <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+            <input type="password" id="signInPassword" placeholder=" " required>
+            <label>Contraseña</label>
+            <ion-icon name="eye-outline" class="toggle-password"></ion-icon>
+          </div>
+
+          <div class="remember">
+            <label><input type="checkbox" id="signInRemember"> Recordarme</label>
+            <a href="#" class="forgot-link" data-view="forgot">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <p class="form-message" id="signInMessage" aria-live="polite"></p>
+
+          <button type="submit" class="cta" aria-label="Ingresar">
+            <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="signUp-link">
+            <p>¿No tenés cuenta? <a href="#" data-view="signup">Registrate</a></p>
+          </div>
+        </form>
+      </div>
+
+      <!-- ===== REGISTRO ===== -->
+      <div class="form-wrapper sign-up">
+        <form id="signUpForm">
+          <img class="brand-logo" src="../Imagenes/Logo Cinemorfosis.png" alt="Cinemorfosis">
+
+          <div class="input-group">
+            <ion-icon name="person-outline" class="input-icon"></ion-icon>
+            <input type="text" id="signUpUser" placeholder=" " required>
+            <label>Usuario</label>
+          </div>
+
+          <div class="input-group">
+            <ion-icon name="mail-outline" class="input-icon"></ion-icon>
+            <input type="email" id="signUpEmail" placeholder=" " required>
+            <label>Email</label>
+          </div>
+
+          <div class="input-group">
+            <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+            <input type="password" id="signUpPassword" placeholder=" " required>
+            <label>Contraseña</label>
+            <ion-icon name="eye-outline" class="toggle-password"></ion-icon>
+          </div>
+
+          <div class="remember">
+            <label><input type="checkbox" id="signUpTerms" required> Acepto los términos y condiciones</label>
+          </div>
+
+          <p class="form-message" id="signUpMessage" aria-live="polite"></p>
+
+          <button type="submit" class="cta" aria-label="Crear cuenta">
+            <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="signUp-link">
+            <p>¿Ya tenés cuenta? <a href="#" data-view="signin">Iniciar sesión</a></p>
+          </div>
+        </form>
+      </div>
+
+      <!-- ===== OLVIDASTE TU CONTRASEÑA ===== -->
+      <div class="form-wrapper forgot-password">
+        <form id="forgotForm">
+          <img class="brand-logo" src="../Imagenes/Logo Cinemorfosis.png" alt="Cinemorfosis">
+          <p class="panel-hint">Recuperá tu contraseña</p>
+
+          <div class="input-group">
+            <ion-icon name="mail-outline" class="input-icon"></ion-icon>
+            <input type="email" id="forgotEmail" placeholder=" " required>
+            <label>Email</label>
+          </div>
+          
+          <div class="input-group">
+            <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+            <input type="password" id="newPassword" placeholder=" " required minlength="6">
+            <label>Nueva contraseña</label>
+            <ion-icon name="eye-outline" class="toggle-password"></ion-icon>
+          </div>
+          
+          <div class="input-group">
+            <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+            <input type="password" id="confirmPassword" placeholder=" " required minlength="6">
+            <label>Confirmar contraseña</label>
+            <ion-icon name="eye-outline" class="toggle-password"></ion-icon>
+          </div>
+
+          <p class="form-message" id="forgotMessage" aria-live="polite"></p>
+
+          <button type="submit" class="cta" aria-label="Restablecer contraseña">
+            <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="signUp-link">
+            <p>¿Recordaste tu contraseña? <a href="#" data-view="signin">Iniciar sesión</a></p>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="film-strip film-strip--bottom" aria-hidden="true"></div>
+  </div>
+
+  <script src="Login.js"></script>
+</body>
+</html>

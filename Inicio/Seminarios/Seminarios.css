@@ -1,0 +1,606 @@
+/* ==========================================================
+   SEMINARIOS — catálogo y detalle
+   Usa las variables definidas en Inicio.css (--ink, --secondary,
+   --primary, --bg, --surface, --adv, --info), así que este
+   archivo siempre se carga junto a Inicio.css.
+   ========================================================== */
+
+/* ---------- Catálogo ---------- */
+.sem-hub {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 56px 32px 90px;
+}
+
+.sem-hub-heading {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 34px;
+}
+.sem-hub-heading h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--secondary);
+  margin-bottom: 10px;
+}
+.sem-hub-heading p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4a4a46;
+}
+
+.sem-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.sem-search {
+  flex: 1 1 260px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 12px 20px;
+  box-shadow: 0 8px 20px rgba(112, 0, 0, 0.08);
+}
+.sem-search ion-icon {
+  font-size: 17px;
+  color: var(--secondary);
+  flex-shrink: 0;
+}
+.sem-search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-size: 13.5px;
+  color: var(--ink);
+  background: transparent;
+}
+.sem-search input::placeholder { color: #9b9b93; }
+
+.sem-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.sem-chip {
+  border: 1.5px solid var(--info);
+  background: var(--surface);
+  color: var(--secondary);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.sem-chip:hover { border-color: var(--secondary); }
+.sem-chip.is-active {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--bg);
+}
+
+.sem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 26px;
+}
+
+.sem-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: 22px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 10px 26px rgba(112, 0, 0, 0.10);
+  overflow: visible;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.sem-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 34px rgba(112, 0, 0, 0.18);
+}
+
+.sem-card-banner {
+  position: relative;
+  height: 120px;
+  border-radius: 22px 22px 0 0;
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.05) 35%, rgba(0, 0, 0, 0.5) 100%),
+    var(--sem-img, linear-gradient(160deg, var(--ink) 0%, var(--secondary) 55%, var(--primary) 115%));
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sem-card-banner ion-icon {
+  font-size: 36px;
+  color: rgba(255, 255, 246, 0.92);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+.sem-card-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255, 255, 246, 0.16);
+  backdrop-filter: blur(3px);
+  color: var(--bg);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 246, 0.3);
+}
+.sem-card-free {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--adv);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+/* Línea de "corte" de boleto, igual a la del hub principal */
+.sem-card-tear {
+  position: relative;
+  height: 0;
+  border-top: 2px dashed var(--info);
+}
+.sem-card-tear::before,
+.sem-card-tear::after {
+  content: '';
+  position: absolute;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  background: var(--bg);
+  border-radius: 50%;
+}
+.sem-card-tear::before { left: -9px; }
+.sem-card-tear::after { right: -9px; }
+
+.sem-card-body {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.sem-card-body h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 16.5px;
+  color: var(--secondary);
+  line-height: 1.3;
+}
+.sem-card-desc {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #4a4a46;
+}
+
+.sem-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 2px;
+  list-style: none;
+}
+.sem-card-meta li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #666059;
+}
+.sem-card-meta ion-icon {
+  font-size: 14px;
+  color: var(--secondary);
+  flex-shrink: 0;
+}
+
+.sem-card-footer {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #efe9e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sem-price {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--secondary);
+}
+.sem-cta-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--primary);
+}
+.sem-cta-text ion-icon {
+  font-size: 14px;
+  transition: transform .15s ease;
+}
+.sem-card:hover .sem-cta-text ion-icon { transform: translateX(3px); }
+
+.sem-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #807a70;
+  font-size: 13.5px;
+  padding: 50px 20px;
+}
+
+/* ---------- Detalle ---------- */
+.sem-detail {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 34px 32px 100px;
+}
+
+.sem-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--secondary);
+  text-decoration: none;
+  margin-bottom: 22px;
+}
+.sem-back:hover { color: var(--primary); }
+.sem-back ion-icon { font-size: 16px; }
+
+.sem-hero-banner {
+  height: 200px;
+  border-radius: 24px;
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.05) 35%, rgba(0, 0, 0, 0.5) 100%),
+    var(--sem-img, linear-gradient(160deg, var(--ink) 0%, var(--secondary) 55%, var(--primary) 115%));
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 34px;
+}
+.sem-hero-banner ion-icon {
+  font-size: 56px;
+  color: rgba(255, 255, 246, 0.92);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+.sem-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 44px;
+  align-items: start;
+}
+
+.sem-detail-main .sem-card-tag {
+  position: static;
+  display: inline-block;
+  background: var(--info);
+  color: var(--secondary);
+  border: none;
+  margin-bottom: 14px;
+}
+.sem-detail-main h1 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.sem-tagline {
+  font-size: 14.5px;
+  color: #4a4a46;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.sem-detail-main section { margin: 30px 0; }
+.sem-detail-main h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--secondary);
+  margin-bottom: 12px;
+}
+.sem-detail-main p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.sem-learn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+.sem-learn-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #333;
+}
+.sem-learn-list ion-icon {
+  font-size: 17px;
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.sem-speaker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sem-speaker-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--info);
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+.sem-speaker h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 15.5px;
+  color: var(--ink);
+}
+.sem-speaker p {
+  font-size: 12.5px;
+  color: #666;
+}
+
+/* Barra lateral con forma de talón de entrada */
+.sem-ticket {
+  position: sticky;
+  top: 24px;
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 26px 24px;
+  box-shadow: 0 10px 26px rgba(112, 0, 0, 0.10);
+  border-left: 2px dashed var(--info);
+}
+.sem-ticket::before,
+.sem-ticket::after {
+  content: '';
+  position: absolute;
+  left: -9px;
+  width: 18px;
+  height: 18px;
+  background: var(--bg);
+  border-radius: 50%;
+}
+.sem-ticket::before { top: -9px; }
+.sem-ticket::after { bottom: -9px; }
+
+.sem-ticket-price {
+  text-align: center;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px dashed var(--info);
+}
+.sem-ticket-price .label {
+  display: block;
+  font-size: 12px;
+  color: #8a8479;
+  margin-bottom: 4px;
+}
+.sem-ticket-price .value {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  color: var(--secondary);
+}
+
+.sem-ticket-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 22px;
+  list-style: none;
+}
+.sem-ticket-details li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.4;
+}
+.sem-ticket-details ion-icon {
+  font-size: 16px;
+  color: var(--secondary);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.sem-inscribir {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 999px;
+  background: var(--secondary);
+  color: var(--bg);
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 14.5px;
+  cursor: pointer;
+  box-shadow: 0 6px 0 var(--ink);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.sem-inscribir:hover { background: var(--primary); }
+.sem-inscribir:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--ink);
+}
+.sem-inscribir:disabled {
+  cursor: default;
+  opacity: .85;
+  transform: none;
+}
+
+.sem-ticket-msg {
+  min-height: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--secondary);
+  margin-top: 12px;
+}
+.sem-ticket-fine {
+  font-size: 11px;
+  color: #9b9b93;
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+/* ---------- Pago simulado (para seminarios pagos) ---------- */
+.sem-pay { margin-top: 6px; }
+
+.sem-pay-card {
+  position: relative;
+  height: 150px;
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  background: linear-gradient(160deg, var(--ink) 0%, var(--secondary) 55%, var(--primary) 115%);
+  color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10px 22px rgba(112, 0, 0, 0.20);
+}
+.sem-pay-card-chip {
+  width: 34px;
+  height: 24px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, var(--adv), #f0e3b8);
+}
+.sem-pay-card-number {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 17px;
+  letter-spacing: 2px;
+}
+.sem-pay-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+.sem-pay-card-label {
+  display: block;
+  font-size: 9.5px;
+  color: rgba(255, 255, 246, 0.65);
+  margin-bottom: 2px;
+}
+.sem-pay-card-name,
+.sem-pay-card-expiry {
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.sem-pay-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sem-pay-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: #6b6b63;
+}
+.sem-pay-field input {
+  height: 44px;
+  border: 1.5px solid var(--info);
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 13.5px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .15s ease;
+}
+.sem-pay-field input:focus { border-color: var(--secondary); }
+
+.sem-pay-row { display: flex; gap: 12px; }
+.sem-pay-row .sem-pay-field { flex: 1; }
+
+.sem-pay-error {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--error, #B3261E);
+  min-height: 16px;
+  margin: 0;
+}
+
+.sem-pay-note {
+  font-size: 11px;
+  color: #9b9b93;
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+.sem-pay-cancel {
+  background: none;
+  border: none;
+  color: var(--secondary);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 4px;
+}
+.sem-pay-cancel:hover { color: var(--primary); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .sem-detail-grid { grid-template-columns: 1fr; }
+  .sem-ticket { position: static; }
+}
+
+@media (max-width: 640px) {
+  .sem-hub { padding: 40px 20px 70px; }
+  .sem-toolbar { flex-direction: column; align-items: stretch; }
+  .sem-grid { grid-template-columns: 1fr; }
+  .sem-detail { padding: 26px 20px 80px; }
+  .sem-hero-banner { height: 150px; }
+}

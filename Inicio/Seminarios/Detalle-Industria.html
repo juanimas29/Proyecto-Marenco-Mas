@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Cine argentino contemporáneo: charla abierta | Cinemorfosis</title>
+    <link rel="stylesheet" type="text/css" href="../Inicio.css" />
+    <link rel="stylesheet" type="text/css" href="Seminarios.css" />
+  </head>
+  <body>
+    <div class="subpage-header">
+      <a href="Seminarios.html" class="back-btn" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <img src="../../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
+      <h1>Seminarios</h1>
+
+      <div class="user-menu" style="margin-left: auto;">
+        <button type="button" class="avatar-btn" id="avatarBtn" aria-haspopup="true" aria-expanded="false">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </button>
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <a href="#"><ion-icon name="person-outline"></ion-icon> Mi perfil</a>
+          <a href="#"><ion-icon name="ticket-outline"></ion-icon> Mis tickets</a>
+          <a href="../../Login/Login.html" class="logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sem-detail">
+      <a class="sem-back" href="Seminarios.html">
+        <ion-icon name="arrow-back-outline"></ion-icon> Volver al catálogo
+      </a>
+
+      <div class="sem-hero-banner" style="--sem-img:url('../../Imagenes/cinecontemporaneoargentino.webp')">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      </div>
+
+      <div class="sem-detail-grid">
+        <div class="sem-detail-main">
+          <span class="sem-card-tag">Industria</span>
+          <h1>Cine argentino contemporáneo: charla abierta</h1>
+          <p class="sem-tagline">Un panel de críticos conversa sobre el presente del cine nacional y hacia dónde va.</p>
+
+          <section>
+            <h2>Sobre este seminario</h2>
+            <p>Convocamos a un panel de críticos y programadores para conversar, en formato abierto, sobre el estado del cine argentino: qué se está filmando, qué se está exhibiendo y qué caminos se abren para las nuevas generaciones.</p>
+            <p>Al finalizar la charla hay un espacio de preguntas del público.</p>
+          </section>
+
+          <section>
+            <h2>Qué vas a aprender</h2>
+            <ul class="sem-learn-list">
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Panorama del cine argentino actual</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Circuitos de exhibición alternativos</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Cómo llega una película independiente a un festival</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Espacio de preguntas y debate</li>
+            </ul>
+          </section>
+
+          <section class="sem-speaker">
+            <div class="sem-speaker-avatar"><ion-icon name="person"></ion-icon></div>
+            <div>
+              <h3>Panel de críticos invitados</h3>
+              <p>Prensa especializada en cine</p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Este seminario es GRATUITO: no lleva formulario de pago,
+             solo el botón "Inscribirme" que confirma directo. -->
+        <aside class="sem-ticket">
+          <div class="sem-ticket-price">
+            <span class="label">Precio</span>
+            <span class="value">Gratuito</span>
+          </div>
+
+          <ul class="sem-ticket-details">
+            <li><ion-icon name="calendar-outline"></ion-icon> 9 de noviembre, 2026</li>
+            <li><ion-icon name="time-outline"></ion-icon> 2 horas</li>
+            <li><ion-icon name="navigate-outline"></ion-icon> Presencial · Cineclub Hugo del Carril, Córdoba</li>
+            <li><ion-icon name="people-outline"></ion-icon> 120 cupos disponibles</li>
+          </ul>
+
+          <button type="button" class="sem-inscribir" id="btnInscribir">Inscribirme</button>
+
+          <p class="sem-ticket-msg" id="semTicketMsg" aria-live="polite"></p>
+          <p class="sem-ticket-fine" id="semTicketFine">Al inscribirte, aceptás nuestros términos y condiciones.</p>
+        </aside>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="film-strip film-strip--top" aria-hidden="true"></div>
+      <p>Cinemorfosis · Hecho por cinéfilos, para cinéfilos</p>
+    </footer>
+
+    <script src="../Inicio.js"></script>
+    <script src="SeminarioDetalle.js"></script>
+  </body>
+</html>

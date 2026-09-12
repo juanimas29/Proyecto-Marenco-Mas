@@ -7,6 +7,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <title>Seminarios | Cinemorfosis</title>
     <link rel="stylesheet" type="text/css" href="../Inicio.css" />
+    <link rel="stylesheet" type="text/css" href="Seminarios.css" />
   </head>
   <body>
     <div class="subpage-header">
@@ -28,15 +29,181 @@
       </div>
     </div>
 
-    <div class="construction">
-      <div class="construction-icon"><ion-icon name="school-outline"></ion-icon></div>
-      <h2>Formate y conectá</h2>
-      <p>
-        Acá vas a poder ver qué seminarios y charlas de cine se dictan
-        en tu ciudad, con fecha, lugar, disertantes y todo lo que
-        necesitás para anotarte. Sección en construcción.
+    <section class="sem-hub">
+      <div class="sem-hub-heading">
+        <h2>Formate y conectá</h2>
+        <p>
+          Descubrí los seminarios y charlas de cine que se dictan en tu
+          ciudad, con fecha, lugar, disertantes y cupos disponibles.
+        </p>
+      </div>
+
+      <div class="sem-toolbar">
+        <div class="sem-search">
+          <ion-icon name="search-outline"></ion-icon>
+          <input type="text" id="semSearch" placeholder="Buscar por título, disertante o categoría..." />
+        </div>
+
+        <div class="sem-filters" id="semFilters">
+          <button type="button" class="sem-chip is-active" data-filter="todos">Todos</button>
+          <button type="button" class="sem-chip" data-filter="dirección">Dirección</button>
+          <button type="button" class="sem-chip" data-filter="guion">Guion</button>
+          <button type="button" class="sem-chip" data-filter="fotografía">Fotografía</button>
+          <button type="button" class="sem-chip" data-filter="sonido">Sonido</button>
+          <button type="button" class="sem-chip" data-filter="producción">Producción</button>
+          <button type="button" class="sem-chip" data-filter="industria">Industria</button>
+        </div>
+      </div>
+
+      <!-- ============ GRILLA DE SEMINARIOS ============
+           Cada tarjeta es HTML fijo. Para agregar un seminario nuevo,
+           copiá un bloque <a class="sem-card">...</a> completo y
+           cambiá el texto, la imagen y el link.
+           El atributo data-category es el que usa el buscador/filtro
+           de arriba para saber a qué categoría pertenece cada tarjeta. -->
+      <div class="sem-grid" id="semGrid">
+
+        <!-- 1. Dirección (gratuito) -->
+        <a class="sem-card" data-category="dirección" href="Detalle-Direccion.html">
+          <div class="sem-card-banner" style="--sem-img:url('../../Imagenes/direcciondepeliculas.webp')">
+            <ion-icon name="megaphone-outline"></ion-icon>
+            <span class="sem-card-tag">Dirección</span>
+            <span class="sem-card-free">Gratis</span>
+          </div>
+          <div class="sem-card-tear" aria-hidden="true"></div>
+          <div class="sem-card-body">
+            <h3>Dirección de actores en el under</h3>
+            <p class="sem-card-desc">Herramientas prácticas para dirigir actores con poco tiempo y menos presupuesto.</p>
+            <ul class="sem-card-meta">
+              <li><ion-icon name="location-outline"></ion-icon> Auditorio Cineclub Municipal, Córdoba</li>
+              <li><ion-icon name="person-outline"></ion-icon> Lucía Ferreyra</li>
+              <li><ion-icon name="calendar-outline"></ion-icon> 18 de octubre, 2026</li>
+            </ul>
+            <div class="sem-card-footer">
+              <span class="sem-price">Gratuito</span>
+              <span class="sem-cta-text">Ver detalle <ion-icon name="arrow-forward-outline"></ion-icon></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 2. Guion (pago) -->
+        <a class="sem-card" data-category="guion" href="Detalle-Guion.html">
+          <div class="sem-card-banner" style="--sem-img:url('../../Imagenes/screanplay.webp')">
+            <ion-icon name="create-outline"></ion-icon>
+            <span class="sem-card-tag">Guion</span>
+          </div>
+          <div class="sem-card-tear" aria-hidden="true"></div>
+          <div class="sem-card-body">
+            <h3>Guion: de la idea al primer borrador</h3>
+            <p class="sem-card-desc">Un taller de cuatro semanas para llevar esa idea que tenés dando vueltas a un guion real.</p>
+            <ul class="sem-card-meta">
+              <li><ion-icon name="location-outline"></ion-icon> Plataforma virtual</li>
+              <li><ion-icon name="person-outline"></ion-icon> Martín Ibáñez</li>
+              <li><ion-icon name="calendar-outline"></ion-icon> 25 de octubre, 2026</li>
+            </ul>
+            <div class="sem-card-footer">
+              <span class="sem-price">$8.000</span>
+              <span class="sem-cta-text">Ver detalle <ion-icon name="arrow-forward-outline"></ion-icon></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 3. Fotografía (pago) -->
+        <a class="sem-card" data-category="fotografía" href="Detalle-Fotografia.html">
+          <div class="sem-card-banner" style="--sem-img:url('../../Imagenes/cinematographic_photography.webp')">
+            <ion-icon name="aperture-outline"></ion-icon>
+            <span class="sem-card-tag">Fotografía</span>
+          </div>
+          <div class="sem-card-tear" aria-hidden="true"></div>
+          <div class="sem-card-body">
+            <h3>Fotografía cinematográfica: luz natural</h3>
+            <p class="sem-card-desc">Aprendé a leer y aprovechar la luz disponible en locación, sin depender de equipo caro.</p>
+            <ul class="sem-card-meta">
+              <li><ion-icon name="location-outline"></ion-icon> Estudio Cinemorfosis, Nueva Córdoba</li>
+              <li><ion-icon name="person-outline"></ion-icon> Valeria Roldán</li>
+              <li><ion-icon name="calendar-outline"></ion-icon> 2 de noviembre, 2026</li>
+            </ul>
+            <div class="sem-card-footer">
+              <span class="sem-price">$12.000</span>
+              <span class="sem-cta-text">Ver detalle <ion-icon name="arrow-forward-outline"></ion-icon></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 4. Industria (gratuito) -->
+        <a class="sem-card" data-category="industria" href="Detalle-Industria.html">
+          <div class="sem-card-banner" style="--sem-img:url('../../Imagenes/cinecontemporaneoargentino.webp')">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+            <span class="sem-card-tag">Industria</span>
+            <span class="sem-card-free">Gratis</span>
+          </div>
+          <div class="sem-card-tear" aria-hidden="true"></div>
+          <div class="sem-card-body">
+            <h3>Cine argentino contemporáneo: charla abierta</h3>
+            <p class="sem-card-desc">Un panel de críticos conversa sobre el presente del cine nacional y hacia dónde va.</p>
+            <ul class="sem-card-meta">
+              <li><ion-icon name="location-outline"></ion-icon> Cineclub Hugo del Carril, Córdoba</li>
+              <li><ion-icon name="person-outline"></ion-icon> Panel de críticos invitados</li>
+              <li><ion-icon name="calendar-outline"></ion-icon> 9 de noviembre, 2026</li>
+            </ul>
+            <div class="sem-card-footer">
+              <span class="sem-price">Gratuito</span>
+              <span class="sem-cta-text">Ver detalle <ion-icon name="arrow-forward-outline"></ion-icon></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 5. Sonido (pago) -->
+        <a class="sem-card" data-category="sonido" href="Detalle-Sonido.html">
+          <div class="sem-card-banner" style="--sem-img:url('../../Imagenes/soundproduction.webp')">
+            <ion-icon name="headset-outline"></ion-icon>
+            <span class="sem-card-tag">Sonido</span>
+          </div>
+          <div class="sem-card-tear" aria-hidden="true"></div>
+          <div class="sem-card-body">
+            <h3>Postproducción de sonido para cortometrajes</h3>
+            <p class="sem-card-desc">Diseño sonoro y mezcla final aplicados a proyectos de bajo presupuesto.</p>
+            <ul class="sem-card-meta">
+              <li><ion-icon name="location-outline"></ion-icon> Plataforma virtual</li>
+              <li><ion-icon name="person-outline"></ion-icon> Nicolás Peralta</li>
+              <li><ion-icon name="calendar-outline"></ion-icon> 16 de noviembre, 2026</li>
+            </ul>
+            <div class="sem-card-footer">
+              <span class="sem-price">$6.000</span>
+              <span class="sem-cta-text">Ver detalle <ion-icon name="arrow-forward-outline"></ion-icon></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 6. Producción (gratuito) -->
+        <a class="sem-card" data-category="producción" href="Detalle-Produccion.html">
+          <div class="sem-card-banner" style="--sem-img:url('../../Imagenes/filmshoot.webp')">
+            <ion-icon name="clipboard-outline"></ion-icon>
+            <span class="sem-card-tag">Producción</span>
+            <span class="sem-card-free">Gratis</span>
+          </div>
+          <div class="sem-card-tear" aria-hidden="true"></div>
+          <div class="sem-card-body">
+            <h3>Producción independiente: tu primer rodaje</h3>
+            <p class="sem-card-desc">Organizá presupuesto, plan de rodaje y equipo para filmar tu primer proyecto propio.</p>
+            <ul class="sem-card-meta">
+              <li><ion-icon name="location-outline"></ion-icon> Espacio Cinemorfosis, Córdoba</li>
+              <li><ion-icon name="person-outline"></ion-icon> Camila Suárez</li>
+              <li><ion-icon name="calendar-outline"></ion-icon> 23 de noviembre, 2026</li>
+            </ul>
+            <div class="sem-card-footer">
+              <span class="sem-price">Gratuito</span>
+              <span class="sem-cta-text">Ver detalle <ion-icon name="arrow-forward-outline"></ion-icon></span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+      <p class="sem-empty" id="semEmpty" hidden>
+        No encontramos seminarios con ese criterio. Probá con otra búsqueda.
       </p>
-    </div>
+    </section>
 
     <footer class="site-footer">
       <div class="film-strip film-strip--top" aria-hidden="true"></div>
@@ -44,5 +211,6 @@
     </footer>
 
     <script src="../Inicio.js"></script>
+    <script src="Seminarios.js"></script>
   </body>
 </html>

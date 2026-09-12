@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Producción independiente: tu primer rodaje | Cinemorfosis</title>
+    <link rel="stylesheet" type="text/css" href="../Inicio.css" />
+    <link rel="stylesheet" type="text/css" href="Seminarios.css" />
+  </head>
+  <body>
+    <div class="subpage-header">
+      <a href="Seminarios.html" class="back-btn" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <img src="../../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
+      <h1>Seminarios</h1>
+
+      <div class="user-menu" style="margin-left: auto;">
+        <button type="button" class="avatar-btn" id="avatarBtn" aria-haspopup="true" aria-expanded="false">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </button>
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <a href="#"><ion-icon name="person-outline"></ion-icon> Mi perfil</a>
+          <a href="#"><ion-icon name="ticket-outline"></ion-icon> Mis tickets</a>
+          <a href="../../Login/Login.html" class="logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sem-detail">
+      <a class="sem-back" href="Seminarios.html">
+        <ion-icon name="arrow-back-outline"></ion-icon> Volver al catálogo
+      </a>
+
+      <div class="sem-hero-banner" style="--sem-img:url('../../Imagenes/filmshoot.webp')">
+        <ion-icon name="clipboard-outline"></ion-icon>
+      </div>
+
+      <div class="sem-detail-grid">
+        <div class="sem-detail-main">
+          <span class="sem-card-tag">Producción</span>
+          <h1>Producción independiente: tu primer rodaje</h1>
+          <p class="sem-tagline">Organizá presupuesto, plan de rodaje y equipo para filmar tu primer proyecto propio.</p>
+
+          <section>
+            <h2>Sobre este seminario</h2>
+            <p>Filmar no depende solo de tener una buena idea: depende de organizarla. Este seminario recorre, paso a paso, cómo armar la producción de un primer proyecto propio con recursos limitados.</p>
+            <p>Formato híbrido: una clase presencial de taller y un encuentro de seguimiento online para resolver dudas puntuales de cada proyecto.</p>
+          </section>
+
+          <section>
+            <h2>Qué vas a aprender</h2>
+            <ul class="sem-learn-list">
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Armado de un presupuesto realista</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Plan de rodaje y desglose de guion</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Cómo conseguir locaciones y equipo</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Permisos y seguros básicos</li>
+            </ul>
+          </section>
+
+          <section class="sem-speaker">
+            <div class="sem-speaker-avatar"><ion-icon name="person"></ion-icon></div>
+            <div>
+              <h3>Camila Suárez</h3>
+              <p>Productora ejecutiva</p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Este seminario es GRATUITO: no lleva formulario de pago,
+             solo el botón "Inscribirme" que confirma directo. -->
+        <aside class="sem-ticket">
+          <div class="sem-ticket-price">
+            <span class="label">Precio</span>
+            <span class="value">Gratuito</span>
+          </div>
+
+          <ul class="sem-ticket-details">
+            <li><ion-icon name="calendar-outline"></ion-icon> 23 de noviembre, 2026</li>
+            <li><ion-icon name="time-outline"></ion-icon> 4 horas + seguimiento online</li>
+            <li><ion-icon name="navigate-outline"></ion-icon> Híbrido · Espacio Cinemorfosis, Córdoba</li>
+            <li><ion-icon name="people-outline"></ion-icon> 50 cupos disponibles</li>
+          </ul>
+
+          <button type="button" class="sem-inscribir" id="btnInscribir">Inscribirme</button>
+
+          <p class="sem-ticket-msg" id="semTicketMsg" aria-live="polite"></p>
+          <p class="sem-ticket-fine" id="semTicketFine">Al inscribirte, aceptás nuestros términos y condiciones.</p>
+        </aside>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="film-strip film-strip--top" aria-hidden="true"></div>
+      <p>Cinemorfosis · Hecho por cinéfilos, para cinéfilos</p>
+    </footer>
+
+    <script src="../Inicio.js"></script>
+    <script src="SeminarioDetalle.js"></script>
+  </body>
+</html>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Guion: de la idea al primer borrador | Cinemorfosis</title>
+    <link rel="stylesheet" type="text/css" href="../Inicio.css" />
+    <link rel="stylesheet" type="text/css" href="Seminarios.css" />
+  </head>
+  <body>
+    <div class="subpage-header">
+      <a href="Seminarios.html" class="back-btn" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <img src="../../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
+      <h1>Seminarios</h1>
+
+      <div class="user-menu" style="margin-left: auto;">
+        <button type="button" class="avatar-btn" id="avatarBtn" aria-haspopup="true" aria-expanded="false">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </button>
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <a href="#"><ion-icon name="person-outline"></ion-icon> Mi perfil</a>
+          <a href="#"><ion-icon name="ticket-outline"></ion-icon> Mis tickets</a>
+          <a href="../../Login/Login.html" class="logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sem-detail">
+      <a class="sem-back" href="Seminarios.html">
+        <ion-icon name="arrow-back-outline"></ion-icon> Volver al catálogo
+      </a>
+
+      <div class="sem-hero-banner" style="--sem-img:url('../../Imagenes/screanplay.webp')">
+        <ion-icon name="create-outline"></ion-icon>
+      </div>
+
+      <div class="sem-detail-grid">
+        <div class="sem-detail-main">
+          <span class="sem-card-tag">Guion</span>
+          <h1>Guion: de la idea al primer borrador</h1>
+          <p class="sem-tagline">Un taller de cuatro semanas para llevar esa idea que tenés dando vueltas a un guion real.</p>
+
+          <section>
+            <h2>Sobre este seminario</h2>
+            <p>Muchas historias se quedan en la cabeza porque falta un método para bajarlas al papel. Este taller propone un recorrido de cuatro semanas para pasar de una idea suelta a un primer borrador completo.</p>
+            <p>Cada semana vas a entregar una parte del guion y recibir devolución personalizada, además de ejercicios de estructura y diálogo.</p>
+          </section>
+
+          <section>
+            <h2>Qué vas a aprender</h2>
+            <ul class="sem-learn-list">
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Estructura en tres actos aplicada a tu propia historia</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Cómo escribir diálogos que suenen naturales</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Técnicas para destrabar el segundo acto</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Formato profesional de guion</li>
+            </ul>
+          </section>
+
+          <section class="sem-speaker">
+            <div class="sem-speaker-avatar"><ion-icon name="person"></ion-icon></div>
+            <div>
+              <h3>Martín Ibáñez</h3>
+              <p>Guionista y docente</p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Este seminario es PAGO: además del botón "Inscribirme"
+             lleva el bloque #semPayWrap con el formulario de pago,
+             oculto (hidden) hasta que se toca el botón. -->
+        <aside class="sem-ticket">
+          <div class="sem-ticket-price">
+            <span class="label">Precio</span>
+            <span class="value">$8.000</span>
+          </div>
+
+          <ul class="sem-ticket-details">
+            <li><ion-icon name="calendar-outline"></ion-icon> 25 de octubre, 2026</li>
+            <li><ion-icon name="time-outline"></ion-icon> 4 semanas (8 horas en total)</li>
+            <li><ion-icon name="navigate-outline"></ion-icon> Online en vivo · Plataforma virtual</li>
+            <li><ion-icon name="people-outline"></ion-icon> 60 cupos disponibles</li>
+          </ul>
+
+          <button type="button" class="sem-inscribir" id="btnInscribir">Inscribirme</button>
+
+          <div class="sem-pay" id="semPayWrap" hidden>
+            <div class="sem-pay-card">
+              <div class="sem-pay-card-chip"></div>
+              <div class="sem-pay-card-number" id="previewNumber">•••• •••• •••• ••••</div>
+              <div class="sem-pay-card-bottom">
+                <div>
+                  <span class="sem-pay-card-label">Titular</span>
+                  <div class="sem-pay-card-name" id="previewName">NOMBRE APELLIDO</div>
+                </div>
+                <div>
+                  <span class="sem-pay-card-label">Vence</span>
+                  <div class="sem-pay-card-expiry" id="previewExpiry">MM/AA</div>
+                </div>
+              </div>
+            </div>
+
+            <form class="sem-pay-form" id="semPayForm" novalidate>
+              <label class="sem-pay-field">
+                <span>Número de tarjeta</span>
+                <input type="text" id="cardNumber" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000">
+              </label>
+              <div class="sem-pay-row">
+                <label class="sem-pay-field">
+                  <span>Vencimiento</span>
+                  <input type="text" id="cardExpiry" inputmode="numeric" maxlength="5" placeholder="MM/AA">
+                </label>
+                <label class="sem-pay-field">
+                  <span>CVV</span>
+                  <input type="text" id="cardCvv" inputmode="numeric" maxlength="4" placeholder="123">
+                </label>
+              </div>
+              <label class="sem-pay-field">
+                <span>Nombre del titular</span>
+                <input type="text" id="cardName" placeholder="Como figura en la tarjeta">
+              </label>
+              <p class="sem-pay-error" id="semPayError"></p>
+              <button type="submit" class="sem-inscribir" id="btnPagar">Pagar $8.000</button>
+              <button type="button" class="sem-pay-cancel" id="btnCancelarPago">Cancelar</button>
+              <p class="sem-pay-note">
+                Pago simulado con fines de demostración — no se procesa
+                ninguna transacción real ni se guardan estos datos.
+              </p>
+            </form>
+          </div>
+
+          <p class="sem-ticket-msg" id="semTicketMsg" aria-live="polite"></p>
+          <p class="sem-ticket-fine" id="semTicketFine">Al inscribirte, aceptás nuestros términos y condiciones.</p>
+        </aside>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="film-strip film-strip--top" aria-hidden="true"></div>
+      <p>Cinemorfosis · Hecho por cinéfilos, para cinéfilos</p>
+    </footer>
+
+    <script src="../Inicio.js"></script>
+    <script src="SeminarioDetalle.js"></script>
+  </body>
+</html>

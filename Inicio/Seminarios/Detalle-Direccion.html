@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Dirección de actores en el under | Cinemorfosis</title>
+    <link rel="stylesheet" type="text/css" href="../Inicio.css" />
+    <link rel="stylesheet" type="text/css" href="Seminarios.css" />
+  </head>
+  <body>
+    <div class="subpage-header">
+      <a href="Seminarios.html" class="back-btn" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <img src="../../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
+      <h1>Seminarios</h1>
+
+      <div class="user-menu" style="margin-left: auto;">
+        <button type="button" class="avatar-btn" id="avatarBtn" aria-haspopup="true" aria-expanded="false">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </button>
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <a href="#"><ion-icon name="person-outline"></ion-icon> Mi perfil</a>
+          <a href="#"><ion-icon name="ticket-outline"></ion-icon> Mis tickets</a>
+          <a href="../../Login/Login.html" class="logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sem-detail">
+      <a class="sem-back" href="Seminarios.html">
+        <ion-icon name="arrow-back-outline"></ion-icon> Volver al catálogo
+      </a>
+
+      <div class="sem-hero-banner" style="--sem-img:url('../../Imagenes/direcciondepeliculas.webp')">
+        <ion-icon name="megaphone-outline"></ion-icon>
+      </div>
+
+      <div class="sem-detail-grid">
+        <div class="sem-detail-main">
+          <span class="sem-card-tag">Dirección</span>
+          <h1>Dirección de actores en el under</h1>
+          <p class="sem-tagline">Herramientas prácticas para dirigir actores con poco tiempo y menos presupuesto.</p>
+
+          <section>
+            <h2>Sobre este seminario</h2>
+            <p>Este seminario está pensado para directores y directoras que trabajan en producciones independientes, donde los ensayos son pocos y los recursos, limitados.</p>
+            <p>A lo largo del encuentro vas a repasar técnicas de dirección de actores aplicadas a rodajes cortos, cómo dar indicaciones claras en el set y cómo sostener la intención de una escena tomada tras toma.</p>
+          </section>
+
+          <section>
+            <h2>Qué vas a aprender</h2>
+            <ul class="sem-learn-list">
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Cómo preparar a un actor en un solo ensayo</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Lenguaje claro para dar indicaciones en el set</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Mantener la continuidad emocional entre tomas</li>
+              <li><ion-icon name="checkmark-circle-outline"></ion-icon> Trabajar con actores no profesionales</li>
+            </ul>
+          </section>
+
+          <section class="sem-speaker">
+            <div class="sem-speaker-avatar"><ion-icon name="person"></ion-icon></div>
+            <div>
+              <h3>Lucía Ferreyra</h3>
+              <p>Directora de cine independiente</p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Este seminario es GRATUITO: no lleva formulario de pago,
+             solo el botón "Inscribirme" que confirma directo. -->
+        <aside class="sem-ticket">
+          <div class="sem-ticket-price">
+            <span class="label">Precio</span>
+            <span class="value">Gratuito</span>
+          </div>
+
+          <ul class="sem-ticket-details">
+            <li><ion-icon name="calendar-outline"></ion-icon> 18 de octubre, 2026</li>
+            <li><ion-icon name="time-outline"></ion-icon> 3 horas</li>
+            <li><ion-icon name="navigate-outline"></ion-icon> Presencial · Auditorio Cineclub Municipal, Córdoba</li>
+            <li><ion-icon name="people-outline"></ion-icon> 40 cupos disponibles</li>
+          </ul>
+
+          <button type="button" class="sem-inscribir" id="btnInscribir">Inscribirme</button>
+
+          <p class="sem-ticket-msg" id="semTicketMsg" aria-live="polite"></p>
+          <p class="sem-ticket-fine" id="semTicketFine">Al inscribirte, aceptás nuestros términos y condiciones.</p>
+        </aside>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="film-strip film-strip--top" aria-hidden="true"></div>
+      <p>Cinemorfosis · Hecho por cinéfilos, para cinéfilos</p>
+    </footer>
+
+    <script src="../Inicio.js"></script>
+    <script src="SeminarioDetalle.js"></script>
+  </body>
+</html>

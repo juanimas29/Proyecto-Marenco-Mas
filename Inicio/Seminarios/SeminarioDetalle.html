@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Seminario | Cinemorfosis</title>
+    <link rel="stylesheet" type="text/css" href="../Inicio.css" />
+    <link rel="stylesheet" type="text/css" href="Seminarios.css" />
+  </head>
+  <body>
+    <div class="subpage-header">
+      <a href="Seminarios.html" class="back-btn" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <img src="../../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
+      <h1>Seminarios</h1>
+
+      <div class="user-menu" style="margin-left: auto;">
+        <button type="button" class="avatar-btn" id="avatarBtn" aria-haspopup="true" aria-expanded="false">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </button>
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <a href="#"><ion-icon name="person-outline"></ion-icon> Mi perfil</a>
+          <a href="#"><ion-icon name="ticket-outline"></ion-icon> Mis tickets</a>
+          <a href="../../Login/Login.html" class="logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sem-detail" id="semDetail">
+      <!-- Contenido inyectado por SeminarioDetalle.js según el ?id= de la URL -->
+    </div>
+
+    <footer class="site-footer">
+      <div class="film-strip film-strip--top" aria-hidden="true"></div>
+      <p>Cinemorfosis · Hecho por cinéfilos, para cinéfilos</p>
+    </footer>
+
+    <script src="../Inicio.js"></script>
+    <script src="seminarios-data.js"></script>
+    <script src="SeminarioDetalle.js"></script>
+  </body>
+</html>

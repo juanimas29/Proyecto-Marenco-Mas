@@ -14,12 +14,33 @@
   const msg = document.getElementById('semTicketMsg');
   const fine = document.getElementById('semTicketFine');
   const payWrap = document.getElementById('semPayWrap');
+  const authGate = document.getElementById('semAuthGate');
 
   if (!btnInscribir) return; // esta página no tiene ticket, no hacemos nada
+
+  // Cinemorfosis.isGuest() viene de Inicio.js (se carga antes que este
+  // archivo en el HTML). Si por algún motivo no está disponible,
+  // tratamos a la persona como invitada por las dudas.
+  function personaEsInvitada() {
+    return window.Cinemorfosis ? window.Cinemorfosis.isGuest() : true;
+  }
+
+  // Si es invitado: oculta el botón (y el formulario de pago, si lo
+  // hubiera) y muestra el aviso de "necesitás una cuenta".
+  function mostrarBarreraDeLogin() {
+    btnInscribir.hidden = true;
+    if (fine) fine.hidden = true;
+    if (payWrap) payWrap.hidden = true;
+    if (authGate) authGate.hidden = false;
+  }
 
   if (!payWrap) {
     // ---------- Seminario GRATUITO: confirmar directo ----------
     btnInscribir.addEventListener('click', () => {
+      if (personaEsInvitada()) {
+        mostrarBarreraDeLogin();
+        return;
+      }
       btnInscribir.disabled = true;
       btnInscribir.textContent = 'Inscripción confirmada ✓';
       if (msg) msg.textContent = 'Te enviamos la confirmación con todos los detalles.';
@@ -42,7 +63,12 @@
   const previewExpiry = document.getElementById('previewExpiry');
 
   // Tocar "Inscribirme" oculta el botón y muestra el formulario
+  // (o la barrera de login, si todavía no inició sesión)
   btnInscribir.addEventListener('click', () => {
+    if (personaEsInvitada()) {
+      mostrarBarreraDeLogin();
+      return;
+    }
     btnInscribir.hidden = true;
     if (fine) fine.hidden = true;
     payWrap.hidden = false;

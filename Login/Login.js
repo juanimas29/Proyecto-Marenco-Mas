@@ -1,5 +1,13 @@
 const wrapper = document.querySelector('.wrapper');
 
+// Si llegamos desde otra página con un link tipo Login.html#signup
+// (por ejemplo, desde "Crear una cuenta" al querer inscribirte a un
+// seminario sin estar logueado), abrimos directamente ese panel.
+const initialView = window.location.hash.replace('#', '');
+if (initialView === 'signup' || initialView === 'forgot') {
+  wrapper.dataset.view = initialView;
+}
+
 // Cambios de panel por data-view
 document.querySelectorAll('a[data-view], button[data-view]').forEach((el) => {
   el.addEventListener('click', (e) => {
@@ -39,6 +47,8 @@ signInForm.addEventListener('submit', (e) => {
   signInMessage.textContent = '¡Bienvenido! Iniciando sesión...';
   signInMessage.className = 'form-message success';
 
+  localStorage.setItem('cinemorfosisSession', 'user');
+
   setTimeout(() => {
       window.location.href = '../Inicio/Inicio.html';
     }, 1000);
@@ -46,6 +56,17 @@ signInForm.addEventListener('submit', (e) => {
     signInMessage.textContent = 'Usuario o contraseña incorrectos';
     signInMessage.className = 'form-message error';
   }
+});
+
+// Entrar como invitado: se puede recorrer el sitio, pero más
+// adelante (comprar entradas, inscribirse a un seminario) se va a
+// pedir iniciar sesión o registrarse.
+const guestLink = document.getElementById('guestLink');
+
+guestLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  localStorage.setItem('cinemorfosisSession', 'guest');
+  window.location.href = '../Inicio/Inicio.html';
 });
 
 // Formulario de registro

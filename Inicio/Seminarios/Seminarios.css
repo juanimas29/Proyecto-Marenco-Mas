@@ -493,7 +493,7 @@
 }
 
 /* ---------- Pago simulado (para seminarios pagos) ---------- */
-.sem-pay { margin-top: 6px; }
+.sem-pay { margin-top: 20px; }
 
 .sem-pay-card {
   position: relative;
@@ -567,6 +567,8 @@
 
 .sem-pay-row { display: flex; gap: 12px; }
 .sem-pay-row .sem-pay-field { flex: 1; }
+.sem-pay-row .sem-pay-field:first-child { flex: 2; }
+.sem-pay-row .sem-pay-field:last-child { flex: 1; max-width: 50px; }
 
 .sem-pay-error {
   font-size: 12px;

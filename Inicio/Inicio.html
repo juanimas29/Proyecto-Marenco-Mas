@@ -15,10 +15,32 @@
       <div class="film-strip film-strip--top" aria-hidden="true"></div>
 
       <div class="hero-topbar">
-        <button type="button" class="location-chip">
-          <ion-icon name="location-outline"></ion-icon>
-          <span>Córdoba, Arg.</span>
-        </button>
+        <div class="location-wrap">
+          <button
+            type="button"
+            class="location-chip"
+            id="locationChip"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <ion-icon name="location-outline"></ion-icon>
+            <span id="locationLabel">Córdoba, Arg.</span>
+            <ion-icon name="chevron-down-outline" class="location-caret"></ion-icon>
+          </button>
+
+          <div class="location-dropdown" id="locationDropdown">
+            <div class="location-search">
+              <ion-icon name="search-outline"></ion-icon>
+              <input
+                type="text"
+                id="locationSearch"
+                placeholder="Buscar país..."
+                autocomplete="off"
+              />
+            </div>
+            <ul class="location-list" id="locationList"></ul>
+          </div>
+        </div>
 
         <img class="hero-logo" src="../Imagenes/Logo Cinemorfosis Blanco.png" alt="Cinemorfosis" />
 
@@ -49,22 +71,31 @@
           que se vienen en tu ciudad.
         </p>
 
-        <form class="search-bar" action="#">
-          <ion-icon name="search-outline" class="search-icon"></ion-icon>
-          <input type="text" placeholder="¿Qué película querés ver?" />
-          <button type="submit" class="search-btn">
-            Buscar
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M4 12h15M13 6l6 6-6 6"
-                stroke="currentColor"
-                stroke-width="2.4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-        </form>
+        <div class="search-wrap">
+          <form class="search-bar" action="#" id="movieSearchForm">
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+            <input
+              type="text"
+              id="movieSearchInput"
+              placeholder="¿Qué película querés ver?"
+              autocomplete="off"
+            />
+            <button type="submit" class="search-btn">
+              Buscar
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M4 12h15M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </form>
+
+          <div class="movie-live-results" id="movieLiveResults"></div>
+        </div>
       </div>
 
       <div class="film-strip film-strip--bottom" aria-hidden="true"></div>

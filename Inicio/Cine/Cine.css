@@ -1,0 +1,136 @@
+/* ============ SELECTOR DE ENTRADAS ============ */
+.cine-selector {
+  max-width: 960px;
+  margin: 44px auto 0;
+  padding: 0 24px;
+}
+
+.cine-selector-heading h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 22px;
+  color: var(--secondary);
+}
+
+.cine-selector-heading p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.5;
+}
+
+.cine-selector-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 18px;
+  background: var(--surface);
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.cine-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 170px;
+  min-width: 160px;
+}
+
+.cine-field label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.cine-field select {
+  height: 42px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: border-color .15s ease;
+}
+
+.cine-field select:hover,
+.cine-field select:focus {
+  border-color: var(--primary);
+}
+
+.cine-field select:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.cine-submit-btn {
+  height: 42px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background .15s ease;
+}
+
+.cine-submit-btn:hover { background: var(--secondary); }
+
+.cine-submit-btn:disabled {
+  background: rgba(0, 0, 0, 0.2);
+  cursor: not-allowed;
+}
+
+.cine-info-chip {
+  flex-basis: 100%;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.7);
+  background: var(--info);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.cine-info-chip.visible { display: flex; }
+
+.cine-info-chip ion-icon {
+  font-size: 16px;
+  color: var(--secondary);
+  flex-shrink: 0;
+}
+
+.cine-disclaimer {
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 1.5;
+}
+
+/* Más aire antes del mapa, ya que ahora el selector de entradas ocupa
+   el lugar donde antes estaba el bloque "en construcción". */
+.cine-map {
+  margin-top: 64px;
+}
+
+@media (max-width: 700px) {
+  .cine-selector { padding: 0 20px; }
+  .cine-selector-form { padding: 14px; gap: 12px; }
+  .cine-field { min-width: 100%; }
+  .cine-submit-btn { width: 100%; justify-content: center; }
+}

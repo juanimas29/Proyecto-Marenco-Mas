@@ -74,6 +74,89 @@ body {
 }
 .location-chip:hover { background: rgba(255, 255, 255, 0.2); }
 .location-chip ion-icon { font-size: 16px; }
+.location-caret {
+  font-size: 13px !important;
+  margin-left: 2px;
+  transition: transform .2s ease;
+}
+.location-chip[aria-expanded="true"] .location-caret {
+  transform: rotate(180deg);
+}
+
+.location-wrap {
+  position: relative;
+  justify-self: start;
+}
+
+.location-dropdown {
+  position: fixed;
+  width: 260px;
+  max-width: 80vw;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  z-index: 999;
+}
+.location-dropdown.open { display: flex; }
+
+.location-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg);
+  border-radius: 999px;
+  padding: 8px 14px;
+  margin-bottom: 8px;
+}
+.location-search ion-icon {
+  font-size: 16px;
+  color: var(--secondary);
+}
+.location-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.location-list {
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.location-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.location-list li:hover { background: var(--bg); }
+.location-list li.current {
+  color: var(--secondary);
+  font-weight: 600;
+}
+.location-list li.current ion-icon {
+  color: var(--primary);
+  font-size: 16px;
+}
+.location-list li.no-results {
+  color: #8a8479;
+  cursor: default;
+  justify-content: center;
+  font-style: italic;
+}
+.location-list li.no-results:hover { background: transparent; }
 
 .hero-logo {
   height: 72px;
@@ -206,6 +289,83 @@ body {
 .search-btn svg { width: 14px; height: 14px; }
 .search-btn:hover { background: var(--secondary); }
 .search-btn:active { transform: scale(.97); }
+
+/* ===== Resultados en vivo del buscador de películas (hero) ===== */
+.search-wrap {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto 30px;
+}
+.search-wrap .search-bar { margin: 0; }
+
+.movie-live-results {
+  position: fixed;
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+  padding: 8px;
+  max-height: 360px;
+  overflow-y: auto;
+  display: none;
+  z-index: 999;
+  text-align: left;
+}
+.movie-live-results.open { display: block; }
+
+.movie-live-results .live-status {
+  padding: 14px 12px;
+  text-align: center;
+  font-size: 13px;
+  color: #8a8479;
+}
+
+.movie-live-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+.movie-live-item:hover { background: var(--bg); }
+
+.movie-live-item img {
+  width: 42px;
+  height: 63px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--bg);
+  flex-shrink: 0;
+}
+
+.movie-live-info { min-width: 0; }
+.movie-live-info .title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.movie-live-info .year {
+  font-size: 12px;
+  color: var(--secondary);
+}
+
+.movie-live-results .see-all {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+}
+.movie-live-results .see-all:hover { color: var(--secondary); }
 
 /* ============ HUB (Cine / Películas / Seminarios) ============ */
 .hub {
@@ -369,6 +529,27 @@ body {
   color: #4a4a46;
   line-height: 1.6;
 }
+.cta-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 26px;
+  padding: 13px 26px;
+  background: var(--secondary);
+  color: var(--bg);
+  font-weight: 600;
+  font-size: 13.5px;
+  text-decoration: none;
+  border-radius: 999px;
+  box-shadow: 0 6px 0 var(--ink);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.cta-volver:hover { background: var(--primary); }
+.cta-volver:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--ink);
+}
+.cta-volver ion-icon { font-size: 16px; }
 
 /* ============ MAPA DE CINES (subpágina Cine) ============ */
 .cine-map {

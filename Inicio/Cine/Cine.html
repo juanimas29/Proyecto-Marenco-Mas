@@ -7,6 +7,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <title>Cine | Cinemorfosis</title>
     <link rel="stylesheet" type="text/css" href="../Inicio.css" />
+    <link rel="stylesheet" type="text/css" href="Cine.css" />
   </head>
   <body>
     <div class="subpage-header">
@@ -28,15 +29,67 @@
       </div>
     </div>
 
-    <div class="construction">
-      <div class="construction-icon"><ion-icon name="film-outline"></ion-icon></div>
-      <h2>Buscá tu función</h2>
-      <p>
-        Acá vas a poder elegir una película, ver los horarios y salas
-        más cercanas según tu ubicación, chequear qué asientos quedan
-        libres y gestionar tus tickets. Sección en construcción.
+    <section class="cine-selector">
+      <div class="cine-selector-heading">
+        <h2>Sacá tus entradas</h2>
+        <p>
+          Elegí la película, el complejo, el día y el horario. Te
+          vamos a abrir la página oficial de venta de entradas de ese
+          cine en una pestaña nueva para que termines de elegir
+          función, sala y asientos.
+        </p>
+      </div>
+
+      <form class="cine-selector-form" id="cineSelectorForm">
+        <div class="cine-field">
+          <label for="cineMovieSelect">Película</label>
+          <select id="cineMovieSelect" required>
+            <option value="">Cargando cartelera...</option>
+          </select>
+        </div>
+
+        <div class="cine-field">
+          <label for="cineComplejoSelect">Complejo</label>
+          <select id="cineComplejoSelect" required>
+            <option value="">Elegí un complejo</option>
+          </select>
+        </div>
+
+        <div class="cine-field">
+          <label for="cineDiaSelect">Día</label>
+          <select id="cineDiaSelect" required>
+            <option value="">Elegí un día</option>
+          </select>
+        </div>
+
+        <div class="cine-field">
+          <label for="cineHorarioSelect">Horario</label>
+          <select id="cineHorarioSelect">
+            <option value="">Cualquier horario</option>
+            <option value="manana">Mañana (hasta 13 hs)</option>
+            <option value="tarde">Tarde (13 a 19 hs)</option>
+            <option value="noche">Noche (desde 19 hs)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="cine-submit-btn">
+          <ion-icon name="ticket-outline"></ion-icon>
+          Buscar entradas
+        </button>
+
+        <div class="cine-info-chip" id="cineInfoChip">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span id="cineInfoChipText"></span>
+        </div>
+      </form>
+
+      <p class="cine-disclaimer">
+        La cartelera se trae de TMDB y puede no coincidir 100% con lo
+        que cada cine tiene programado ese día. La compra y elección
+        de asientos se hace en el sitio oficial de cada complejo,
+        porque no manejan una API pública para reservar desde afuera.
       </p>
-    </div>
+    </section>
 
     <section class="cine-map">
       <div class="cine-map-heading">
@@ -74,5 +127,6 @@
     </footer>
 
     <script src="../Inicio.js"></script>
+    <script src="Cine.js"></script>
   </body>
 </html>

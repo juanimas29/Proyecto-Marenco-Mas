@@ -12,14 +12,20 @@
   <body>
     <!-- Encabezado con fondo rojo y buscador -->
     <header class="hero-header">
+      <div class="film-strip film-strip--top" aria-hidden="true"></div>
+
       <div class="subpage-header">
         <a href="../Inicio.html" class="back-btn" aria-label="Volver">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </a>
-        <img src="../../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
-        <h1>Películas</h1>
 
-        <div class="user-menu" style="margin-left: auto;">
+        <img
+          class="hero-logo-big"
+          src="../../Imagenes/Logo Cinemorfosis Blanco.png"
+          alt="Cinemorfosis"
+        />
+
+        <div class="user-menu">
           <button type="button" class="avatar-btn" id="avatarBtn" aria-haspopup="true" aria-expanded="false">
             <ion-icon name="person-circle-outline"></ion-icon>
           </button>
@@ -55,6 +61,53 @@
 
     <!-- Sección del catálogo sobre fondo claro -->
     <main class="catalog-section">
+      <h3 class="catalog-title" id="catalogTitle">Populares del momento</h3>
+
+      <div class="filters-bar">
+        <div class="filter-group">
+          <label for="filterGenero">Género</label>
+          <select id="filterGenero">
+            <option value="">Todos</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterPlataforma">Dónde ver</label>
+          <select id="filterPlataforma">
+            <option value="">Todas</option>
+            <option value="cines">En cines</option>
+            <option value="8">Netflix</option>
+            <option value="119">Amazon Prime Video</option>
+            <option value="337">Disney+</option>
+            <option value="1899">HBO Max</option>
+            <option value="350">Apple TV+</option>
+            <option value="531">Paramount+</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterAnio">Año</label>
+          <select id="filterAnio">
+            <option value="">Todos</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterDuracion">Duración</label>
+          <select id="filterDuracion">
+            <option value="">Todas</option>
+            <option value="0-90">Hasta 90 min</option>
+            <option value="90-120">90 a 120 min</option>
+            <option value="120-150">120 a 150 min</option>
+            <option value="150-999">Más de 150 min</option>
+          </select>
+        </div>
+
+        <button type="button" id="filterReset" class="filter-reset-btn">
+          Ver Populares del momento
+        </button>
+      </div>
+
       <div id="resultsContainer" class="results-grid"></div>
     </main>
 
@@ -62,6 +115,18 @@
       <div class="film-strip film-strip--top" aria-hidden="true"></div>
       <p>Cinemorfosis · Hecho por cinéfilos, para cinéfilos</p>
     </footer>
+
+    <!-- Modal de detalle de película -->
+    <div class="movie-modal-overlay" id="movieModalOverlay">
+      <div class="movie-modal" id="movieModal">
+        <button type="button" class="movie-modal-close" id="movieModalClose" aria-label="Cerrar">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+        <div class="movie-modal-content" id="movieModalContent">
+          <!-- Contenido inyectado por Peliculas.js -->
+        </div>
+      </div>
+    </div>
 
     <script src="../Inicio.js"></script>
     <script src="Peliculas.js"></script>

@@ -1,5 +1,39 @@
 const wrapper = document.querySelector('.wrapper');
 
+// ===== Fondo mosaico tipo "pared de cine" =====
+const cinemaImages = [
+  '../Imagenes/filmshoot.webp',
+  '../Imagenes/cinematographic photography.webp',
+  '../Imagenes/direcciondepeliculas.webp',
+  '../Imagenes/screanplay.webp',
+  '../Imagenes/soundproduction.webp',
+  '../Imagenes/cinecontemporaneoargentino.webp',
+];
+
+function buildCinemaBackdrop() {
+  const backdrop = document.getElementById('cinemaBackdrop');
+  if (!backdrop) return;
+
+  const tileSize = 170; // debe coincidir con grid-auto-rows / minmax del CSS
+  // Factor extra porque el mosaico está rotado y escalado (rotate + scale en el CSS)
+  const overscan = 1.7;
+  const cols = Math.ceil((window.innerWidth * overscan) / tileSize) + 1;
+  const rows = Math.ceil((window.innerHeight * overscan) / tileSize) + 1;
+  const total = cols * rows;
+
+  backdrop.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const img = document.createElement('img');
+    img.className = 'tile';
+    img.src = cinemaImages[i % cinemaImages.length];
+    img.alt = '';
+    backdrop.appendChild(img);
+  }
+}
+
+buildCinemaBackdrop();
+window.addEventListener('resize', buildCinemaBackdrop);
+
 // Si llegamos desde otra página con un link tipo Login.html#signup
 // (por ejemplo, desde "Crear una cuenta" al querer inscribirte a un
 // seminario sin estar logueado), abrimos directamente ese panel.

@@ -6,6 +6,7 @@ const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
 const resultsContainer = document.getElementById('resultsContainer');
 const catalogTitle = document.getElementById('catalogTitle');
+const pagination = document.getElementById('pagination');
 
 const filterGenero = document.getElementById('filterGenero');
 const filterPlataforma = document.getElementById('filterPlataforma');
@@ -68,13 +69,14 @@ if (searchInput) {
   });
 }
 
-async function buscarPeliculas(query) {
+async function buscarPeliculas(query, page = 1) {
   const requestId = ++lastRequestId;
 
   try {
     if (catalogTitle) catalogTitle.textContent = `Resultados para "${query}"`;
     resultsContainer.innerHTML = '<p class="status-msg">Buscando películas...</p>';
-    const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&language=es-ES&query=${encodeURIComponent(query)}`);
+    limpiarPaginacion();
+    const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&language=es-ES&query=${encodeURIComponent(query)}&page=${page}`);
     const data = await response.json();
 
     // Si mientras esperábamos la respuesta el usuario ya tipeó otra
@@ -82,11 +84,57 @@ async function buscarPeliculas(query) {
     if (requestId !== lastRequestId) return;
 
     mostrarPeliculas(data.results);
+    renderPaginacion(data.total_pages, page, (p) => buscarPeliculas(query, p));
   } catch (error) {
     if (requestId !== lastRequestId) return;
     console.error('Error al conectar con TMDB:', error);
     resultsContainer.innerHTML = '<p class="status-msg">Hubo un error al realizar la búsqueda.</p>';
   }
+}
+
+/* ==========================================================
+   PAGINADO (usa el parámetro ?page= de TMDB, 20 películas por página)
+   ========================================================== */
+function limpiarPaginacion() {
+  if (pagination) pagination.innerHTML = '';
+}
+
+// goTo(n) es la función que vuelve a pedir la página n del listado
+// actual (populares, búsqueda o filtros).
+function renderPaginacion(totalPages, currentPage, goTo) {
+  if (!pagination) return;
+
+  // TMDB no permite pasar de la página 500.
+  const total = Math.min(totalPages || 1, 500);
+  if (total <= 1) {
+    pagination.innerHTML = '';
+    return;
+  }
+
+  // Mostramos: primera, última y 2 páginas a cada lado de la actual.
+  const paginas = new Set([1, total]);
+  for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+    if (i >= 1 && i <= total) paginas.add(i);
+  }
+
+  let html = `<button type="button" class="page-btn" data-page="${currentPage - 1}" aria-label="Página anterior" ${currentPage === 1 ? 'disabled' : ''}>‹</button>`;
+
+  let anterior = 0;
+  [...paginas].sort((a, b) => a - b).forEach((p) => {
+    if (p - anterior > 1) html += '<span class="page-dots">…</span>';
+    html += `<button type="button" class="page-btn ${p === currentPage ? 'is-active' : ''}" data-page="${p}" ${p === currentPage ? 'aria-current="page"' : ''}>${p}</button>`;
+    anterior = p;
+  });
+
+  html += `<button type="button" class="page-btn" data-page="${currentPage + 1}" aria-label="Página siguiente" ${currentPage === total ? 'disabled' : ''}>›</button>`;
+
+  pagination.innerHTML = html;
+  pagination.onclick = (e) => {
+    const btn = e.target.closest('.page-btn');
+    if (!btn || btn.disabled) return;
+    goTo(Number(btn.dataset.page));
+    if (catalogTitle) catalogTitle.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 }
 
 function mostrarPeliculas(peliculas) {
@@ -141,18 +189,20 @@ if (queryDesdeInicio && searchInput) {
   cargarPopulares();
 }
 
-async function cargarPopulares() {
+async function cargarPopulares(page = 1) {
   const requestId = ++lastRequestId;
 
   try {
     if (catalogTitle) catalogTitle.textContent = 'Populares del momento';
     resultsContainer.innerHTML = '<p class="status-msg">Cargando populares...</p>';
-    const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=1`);
+    limpiarPaginacion();
+    const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=${page}`);
     const data = await response.json();
 
     if (requestId !== lastRequestId) return;
 
     mostrarPeliculas(data.results);
+    renderPaginacion(data.total_pages, page, (p) => cargarPopulares(p));
   } catch (error) {
     if (requestId !== lastRequestId) return;
     console.error('Error al conectar con TMDB:', error);
@@ -214,7 +264,7 @@ function limpiarFiltros(recargar) {
   if (recargar) cargarPopulares();
 }
 
-async function aplicarFiltros() {
+async function aplicarFiltros(page = 1) {
   const requestId = ++lastRequestId;
 
   const genero = filterGenero ? filterGenero.value : '';
@@ -231,10 +281,11 @@ async function aplicarFiltros() {
   try {
     if (catalogTitle) catalogTitle.textContent = 'Resultados filtrados';
     resultsContainer.innerHTML = '<p class="status-msg">Buscando películas...</p>';
+    limpiarPaginacion();
 
     // watch_region=AR porque el catálogo de plataformas de TMDB varía
     // por país; usamos Argentina como región de referencia del sitio.
-    let url = `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=es-ES&sort_by=popularity.desc&region=AR`;
+    let url = `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=es-ES&sort_by=popularity.desc&region=AR&page=${page}`;
 
     if (genero) url += `&with_genres=${genero}`;
     if (anio) url += `&primary_release_year=${anio}`;
@@ -265,6 +316,7 @@ async function aplicarFiltros() {
     if (requestId !== lastRequestId) return;
 
     mostrarPeliculas(data.results);
+    renderPaginacion(data.total_pages, page, (p) => aplicarFiltros(p));
   } catch (error) {
     if (requestId !== lastRequestId) return;
     console.error('Error al aplicar filtros:', error);

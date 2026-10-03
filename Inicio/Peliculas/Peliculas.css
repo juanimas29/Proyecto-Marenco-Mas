@@ -493,3 +493,36 @@ body.modal-open {
     margin: 0 auto;
   }
 }
+
+/* ============ PAGINADO ============ */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 38px 0 10px;
+}
+.page-btn {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--secondary);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(112, 0, 0, 0.10);
+  transition: background .15s ease, color .15s ease, transform .15s ease;
+}
+.page-btn:hover:not(:disabled):not(.is-active) { background: var(--info); }
+.page-btn.is-active {
+  background: var(--primary);
+  color: var(--bg);
+  box-shadow: 0 4px 0 var(--secondary);
+  cursor: default;
+}
+.page-btn:disabled { opacity: .4; cursor: default; }
+.page-dots { color: var(--secondary); font-weight: 600; padding: 0 2px; }

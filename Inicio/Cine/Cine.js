@@ -22,16 +22,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // tenemos forma de armar un link directo a "esta función de esta
   // película en esta sala" porque esa parte vive en el sistema
   // interno de cada cine.
+  //
+  // cadena: 'cinemark' => al elegir el complejo se abre directo la
+  // página de la película en Cinemark (ver urlCinemarkPelicula).
   const COMPLEJOS = [
     {
       id: 'hoyts-nuevocentro',
       nombre: 'Cinemark Hoyts · Nuevocentro Shopping',
-      url: 'https://www.cinemarkhoyts.com.ar/',
+      url: 'https://www.cinemark.com.ar/',
+      cadena: 'cinemark',
     },
     {
       id: 'hoyts-patio-olmos',
       nombre: 'Cinemark Hoyts · Patio Olmos',
-      url: 'https://www.cinemarkhoyts.com.ar/',
+      url: 'https://www.cinemark.com.ar/',
+      cadena: 'cinemark',
     },
     {
       id: 'showcase-cordoba',
@@ -58,6 +63,29 @@ document.addEventListener('DOMContentLoaded', () => {
     'Avengers: Endgame (reestreno)',
     'Moana (acción real)',
   ];
+
+  // Cinemark arma la URL de cada película así:
+  //   https://www.cinemark.com.ar/pelicula/resident-evil-noche-cero
+  // Si el título de TMDB no coincide con el que usa Cinemark, agregá
+  // acá la excepción:  'Título en TMDB': 'slug-en-cinemark'
+  const CINEMARK_PELICULA_BASE = 'https://www.cinemark.com.ar/pelicula/';
+  const SLUGS_CINEMARK = {
+    // 'Spider-Man: Un Nuevo Día': 'spider-man-un-nuevo-dia',
+  };
+
+  // "Resident Evil: Noche cero" -> "resident-evil-noche-cero"
+  function slugify(texto) {
+    return texto
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  function urlCinemarkPelicula(titulo) {
+    return CINEMARK_PELICULA_BASE + (SLUGS_CINEMARK[titulo] || slugify(titulo));
+  }
 
   const HORARIOS_LABEL = {
     manana: 'Mañana (hasta 13 hs)',
@@ -249,11 +277,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // nueva. No podemos completar la compra por él: cada cadena
       // maneja su propio sistema de butacas y no expone una forma de
       // integrarlo desde afuera.
-      window.open(complejo.url, '_blank', 'noopener');
+      // Cinemark: link directo a la película elegida. Otras cadenas:
+      // cartelera general del complejo.
+      const esCinemark = complejo.cadena === 'cinemark';
+      const destino = esCinemark ? urlCinemarkPelicula(peliTitulo) : complejo.url;
+      window.open(destino, '_blank', 'noopener');
 
       if (infoChipText) {
-        infoChipText.textContent =
-          `Te abrimos la cartelera de ${complejo.nombre}. Buscá "${peliTitulo}" para el ${diaLabel} (${horarioLabel}) y elegí ahí tu función.`;
+        infoChipText.textContent = esCinemark
+          ? `Te abrimos "${peliTitulo}" en Cinemark. Elegí ahí el complejo, el ${diaLabel} (${horarioLabel}) y tus asientos. Si la página no existe, buscala en cinemark.com.ar.`
+          : `Te abrimos la cartelera de ${complejo.nombre}. Buscá "${peliTitulo}" para el ${diaLabel} (${horarioLabel}) y elegí ahí tu función.`;
         infoChip.classList.add('visible');
       }
     });

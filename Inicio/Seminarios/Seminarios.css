@@ -621,3 +621,8 @@
   .sem-detail { padding: 26px 20px 80px; }
   .sem-hero-banner { height: 150px; }
 }
+
+/* El atributo [hidden] pierde contra "display: flex" de .sem-card,
+   por eso el filtro y el buscador no ocultaban nada. Esto lo arregla. */
+.sem-card[hidden],
+.sem-empty[hidden] { display: none !important; }

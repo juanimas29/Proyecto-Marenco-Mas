@@ -11,15 +11,19 @@
 
   let activeFilter = 'todos';
 
+  // Compara sin tildes ni mayúsculas: "direccion" encuentra "Dirección".
+  const normalize = (s) =>
+    s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
   function applyFilters() {
-    const query = searchInput.value.trim().toLowerCase();
+    const query = normalize(searchInput.value.trim());
     let visibleCount = 0;
 
     cards.forEach((card) => {
-      const category = card.dataset.category; // ej: "dirección"
-      const text = card.textContent.toLowerCase(); // todo el texto de la tarjeta
+      const category = normalize(card.dataset.category); // ej: "direccion"
+      const text = normalize(card.textContent); // todo el texto de la tarjeta
 
-      const matchesCategory = activeFilter === 'todos' || category === activeFilter;
+      const matchesCategory = activeFilter === 'todos' || category === normalize(activeFilter);
       const matchesSearch = query === '' || text.includes(query);
 
       const shouldShow = matchesCategory && matchesSearch;

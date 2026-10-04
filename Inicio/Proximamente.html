@@ -6,6 +6,7 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <title>Próximamente | Cinemorfosis</title>
+    <link rel="icon" type="image/png" href="../Imagenes/Variante Logo.png" />
     <link rel="stylesheet" type="text/css" href="Inicio.css" />
   </head>
   <body>
@@ -49,8 +50,7 @@
 
     <script src="Inicio.js"></script>
     <script>
-      // Si venimos de elegir un país en el selector de ubicación,
-      // personalizamos el título con el nombre de ese país.
+      // Personalizar comentario con el país seleccionado.
       const params = new URLSearchParams(window.location.search);
       const region = params.get('region');
       if (region) {

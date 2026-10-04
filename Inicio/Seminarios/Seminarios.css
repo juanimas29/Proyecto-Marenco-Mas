@@ -1,11 +1,3 @@
-/* ==========================================================
-   SEMINARIOS — catálogo y detalle
-   Usa las variables definidas en Inicio.css (--ink, --secondary,
-   --primary, --bg, --surface, --adv, --info), así que este
-   archivo siempre se carga junto a Inicio.css.
-   ========================================================== */
-
-/* ---------- Catálogo ---------- */
 .sem-hub {
   max-width: 1080px;
   margin: 0 auto;
@@ -155,7 +147,6 @@
   border-radius: 999px;
 }
 
-/* Línea de "corte" de boleto, igual a la del hub principal */
 .sem-card-tear {
   position: relative;
   height: 0;
@@ -250,7 +241,7 @@
   padding: 50px 20px;
 }
 
-/* ---------- Detalle ---------- */
+
 .sem-detail {
   max-width: 1080px;
   margin: 0 auto;
@@ -492,7 +483,7 @@
   margin-top: 10px;
 }
 
-/* ---------- Pago simulado (para seminarios pagos) ---------- */
+/* Pago simulado (para seminarios pagos) */
 .sem-pay { margin-top: 20px; }
 
 .sem-pay-card {
@@ -601,6 +592,7 @@
 /* Bloque que se muestra si un invitado intenta inscribirse */
 .sem-auth-gate { text-align: center; }
 .sem-auth-gate-text {
+  margin-top: 26px;
   font-size: 13px;
   color: #4a4a46;
   line-height: 1.5;
@@ -622,7 +614,6 @@
   .sem-hero-banner { height: 150px; }
 }
 
-/* El atributo [hidden] pierde contra "display: flex" de .sem-card,
-   por eso el filtro y el buscador no ocultaban nada. Esto lo arregla. */
+
 .sem-card[hidden],
 .sem-empty[hidden] { display: none !important; }

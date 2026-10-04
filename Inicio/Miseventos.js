@@ -1,7 +1,3 @@
-// Dibuja la lista de seminarios a los que la persona se inscribió.
-// Los datos los guarda SeminarioDetalle.js (vía Inicio.js) cuando
-// alguien confirma su inscripción; acá solo se leen y se muestran.
-
 (function () {
   const list = document.getElementById('evList');
   const empty = document.getElementById('evEmpty');
@@ -10,7 +6,6 @@
 
   const C = window.Cinemorfosis;
 
-  // Invitado (o sin sesión): no tiene eventos, le pedimos que inicie sesión.
   if (!C || C.isGuest()) {
     gate.hidden = false;
     subtitle.hidden = true;
@@ -23,8 +18,6 @@
     noviembre: 10, diciembre: 11,
   };
 
-  // Convierte "18 de octubre, 2026" en una fecha. Si no se puede
-  // entender el texto, devuelve null (el evento queda al final).
   function parsearFecha(texto) {
     const m = /(\d{1,2})\s+de\s+([a-záéíóú]+),?\s+(\d{4})/i.exec(texto || '');
     if (!m) return null;
@@ -56,8 +49,7 @@
       ? 'Estás inscripto/a a 1 evento.'
       : `Estás inscripto/a a ${eventos.length} eventos.`;
 
-  // Crea un <li> con icono + texto (todo con textContent: nada de HTML
-  // armado a mano, así un título raro no puede romper la página).
+  
   function fila(icono, texto) {
     if (!texto) return null;
     const li = document.createElement('li');

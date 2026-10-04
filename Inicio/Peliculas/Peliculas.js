@@ -18,11 +18,7 @@ const movieModalOverlay = document.getElementById('movieModalOverlay');
 const movieModalClose = document.getElementById('movieModalClose');
 const movieModalContent = document.getElementById('movieModalContent');
 
-// Búsqueda en vivo: mismo patrón que usamos en el selector de
-// ubicación y en el buscador del Inicio. Con cada tecla esperamos un
-// poquito (debounce) antes de pegarle a la API, para no disparar un
-// pedido por cada letra. lastRequestId evita que una respuesta vieja
-// (de una búsqueda anterior que tardó más) pise a una más nueva.
+// Búsqueda en vivo.
 let debounceTimer = null;
 let lastRequestId = 0;
 
@@ -43,8 +39,7 @@ if (searchInput) {
   });
 }
 
-// El botón y Enter quedan como acceso directo (fuerzan la búsqueda ya,
-// sin esperar el debounce), por si alguien prefiere usarlos.
+
 if (searchButton) {
   searchButton.addEventListener('click', () => {
     clearTimeout(debounceTimer);
@@ -79,8 +74,7 @@ async function buscarPeliculas(query, page = 1) {
     const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&language=es-ES&query=${encodeURIComponent(query)}&page=${page}`);
     const data = await response.json();
 
-    // Si mientras esperábamos la respuesta el usuario ya tipeó otra
-    // cosa, descartamos este resultado viejo para no pisar el nuevo.
+   
     if (requestId !== lastRequestId) return;
 
     mostrarPeliculas(data.results);
@@ -92,26 +86,23 @@ async function buscarPeliculas(query, page = 1) {
   }
 }
 
-/* ==========================================================
-   PAGINADO (usa el parámetro ?page= de TMDB, 20 películas por página)
-   ========================================================== */
+
 function limpiarPaginacion() {
   if (pagination) pagination.innerHTML = '';
 }
 
-// goTo(n) es la función que vuelve a pedir la página n del listado
-// actual (populares, búsqueda o filtros).
+
 function renderPaginacion(totalPages, currentPage, goTo) {
   if (!pagination) return;
 
-  // TMDB no permite pasar de la página 500.
+  
   const total = Math.min(totalPages || 1, 500);
   if (total <= 1) {
     pagination.innerHTML = '';
     return;
   }
 
-  // Mostramos: primera, última y 2 páginas a cada lado de la actual.
+ 
   const paginas = new Set([1, total]);
   for (let i = currentPage - 2; i <= currentPage + 2; i++) {
     if (i >= 1 && i <= total) paginas.add(i);
@@ -163,8 +154,7 @@ function mostrarPeliculas(peliculas) {
       <p class="movie-year">${anio}</p>
     `;
 
-    // Tanto en el listado normal como en los resultados del buscador,
-    // tocar la tarjeta abre el modal con el detalle completo.
+    
     card.addEventListener('click', () => abrirDetallePelicula(pelicula.id));
     card.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') abrirDetallePelicula(pelicula.id);
@@ -174,8 +164,7 @@ function mostrarPeliculas(peliculas) {
   });
 }
 
-// Si llegamos desde el buscador del Inicio (Peliculas.html?q=nombre),
-// precargamos el input y disparamos la búsqueda automáticamente.
+
 const paramsPeliculas = new URLSearchParams(window.location.search);
 const queryDesdeInicio = paramsPeliculas.get('q');
 
@@ -210,11 +199,9 @@ async function cargarPopulares(page = 1) {
   }
 }
 
-/* ==========================================================
-   FILTROS: género, plataforma/en cines y año
-   ========================================================== */
 
-// Cargamos la lista de géneros de TMDB y armamos el <select> dinámicamente.
+
+
 async function cargarGeneros() {
   try {
     const response = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=es-ES`);
@@ -231,7 +218,7 @@ async function cargarGeneros() {
   }
 }
 
-// Armamos el <select> de años: desde el actual hacia atrás.
+
 function cargarAnios() {
   const anioActual = new Date().getFullYear();
   for (let anio = anioActual; anio >= 1970; anio--) {
@@ -283,23 +270,21 @@ async function aplicarFiltros(page = 1) {
     resultsContainer.innerHTML = '<p class="status-msg">Buscando películas...</p>';
     limpiarPaginacion();
 
-    // watch_region=AR porque el catálogo de plataformas de TMDB varía
-    // por país; usamos Argentina como región de referencia del sitio.
+    
     let url = `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=es-ES&sort_by=popularity.desc&region=AR&page=${page}`;
 
     if (genero) url += `&with_genres=${genero}`;
     if (anio) url += `&primary_release_year=${anio}`;
 
     if (duracion) {
-      // El valor viene armado como "min-max" (en minutos), ej: "90-120".
+      
       const [minMin, minMax] = duracion.split('-');
       if (minMin) url += `&with_runtime.gte=${minMin}`;
       if (minMax) url += `&with_runtime.lte=${minMax}`;
     }
 
     if (plataforma === 'cines') {
-      // TMDB no tiene un flag de "en cines" para /discover, así que lo
-      // simulamos: estrenos de cine (release_type 2 y 3) del último mes.
+      
       const hoy = new Date();
       const haceUnMes = new Date();
       haceUnMes.setDate(hoy.getDate() - 30);
@@ -340,12 +325,7 @@ if (filterReset) {
   });
 }
 
-/* ==========================================================
-   MODAL DE DETALLE DE PELÍCULA
-   ========================================================== */
 
-// Pide a TMDB toda la info de una película: ficha técnica, reparto
-// (credits) y dónde verla (watch/providers), todo en un solo pedido.
 async function abrirDetallePelicula(id) {
   if (!movieModalOverlay || !movieModalContent) return;
 
@@ -383,7 +363,7 @@ if (movieModalClose) {
 }
 
 if (movieModalOverlay) {
-  // Cerrar al tocar el fondo oscuro, pero no al tocar adentro del modal.
+  
   movieModalOverlay.addEventListener('click', (e) => {
     if (e.target === movieModalOverlay) cerrarDetallePelicula();
   });
@@ -401,8 +381,7 @@ function formatearDuracion(minutos) {
   return horas > 0 ? `${horas}h ${mins}min` : `${mins}min`;
 }
 
-// Arma los logitos de plataformas (streaming / alquiler / compra) para
-// la región de Argentina, usando el bloque watch/providers de TMDB.
+
 function construirHTMLProveedores(proveedoresAR) {
   if (!proveedoresAR) {
     return '<p class="movie-detail-noproviders">No encontramos información de disponibilidad para Argentina.</p>';
@@ -441,7 +420,7 @@ function construirHTMLProveedores(proveedoresAR) {
     html = '<p class="movie-detail-noproviders">No encontramos dónde verla en streaming, alquiler o compra en Argentina.</p>';
   }
 
-  // TMDB pide dar crédito a JustWatch cuando se muestra esta data.
+  
   if (proveedoresAR.link) {
     html += `<a href="${proveedoresAR.link}" target="_blank" rel="noopener" class="watch-jw-link">Ver todas las opciones (JustWatch) →</a>`;
   }

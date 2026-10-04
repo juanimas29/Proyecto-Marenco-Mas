@@ -15,9 +15,6 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Placeholder de búsqueda: acá se conectará la lógica real de
-// búsqueda de películas/funciones más adelante.
-// (el buscador solo existe en Inicio.html, por eso el chequeo)
 const searchBar = document.querySelector('.search-bar');
 if (searchBar) {
   searchBar.addEventListener('submit', (e) => {
@@ -26,14 +23,7 @@ if (searchBar) {
   });
 }
 
-// ===================================================================
-// BUSCADOR DE PELÍCULAS EN VIVO (hero del Inicio)
-//
-// Usa la misma API de TMDB que ya usa la página de Películas. A
-// medida que el usuario escribe (con un pequeño debounce para no
-// disparar un pedido por cada tecla), va mostrando resultados reales
-// con póster, título y año en un dropdown debajo de la barra.
-// ===================================================================
+
 const TMDB_API_KEY = 'f5e63df2afa3ae459863c535bd3f8a62';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_IMAGE_URL = 'https://image.tmdb.org/t/p/w92';
@@ -164,22 +154,16 @@ if (movieSearchForm && movieSearchInput && movieLiveResults) {
   });
 }
 
-
-//
 // En vez de tipear los países a mano, usamos la API nativa Intl del
 // navegador: Intl.supportedValuesOf('region') nos da todos los
 // códigos de país (ISO) que el navegador conoce, e Intl.DisplayNames
-// los traduce a nombre en español. Así el listado sale completo y
-// actualizado solo, sin mantenerlo nosotros.
-// ===================================================================
+// los traduce a nombre en español.
 const locationChip = document.getElementById('locationChip');
 const locationDropdown = document.getElementById('locationDropdown');
 const locationSearch = document.getElementById('locationSearch');
 const locationList = document.getElementById('locationList');
 
-// Nuestra "ubicación actual" no es un país entero sino una ciudad
-// puntual (Córdoba, Argentina), así que la tratamos aparte del
-// listado general de países.
+
 const HOME = { code: 'AR', city: 'Córdoba', label: 'Córdoba, Arg.' };
 
 // Códigos ISO 3166-1 alpha-2 de todos los países reconocidos actualmente.
@@ -311,21 +295,6 @@ if (locationChip && locationDropdown && locationList) {
   });
 }
 
-
-// ===================================================================
-// SESIÓN (invitado vs. usuario logueado)
-//
-// No hay backend todavía, así que guardamos un valor simple en
-// localStorage para recordar cómo entró la persona:
-//   'user'  -> inició sesión de verdad (Login.html lo setea)
-//   'guest' -> entró como invitado (Login.html lo setea)
-//   (nada)  -> no pasó por Login.html (por las dudas, lo tratamos
-//              igual que invitado)
-//
-// Esto se ejecuta en TODAS las páginas porque todas cargan este
-// mismo Inicio.js, así el menú de la personita y los seminarios
-// pueden preguntar "¿esta persona está logueada?" sin repetir código.
-// ===================================================================
 const SESSION_KEY = 'cinemorfosisSession';
 // Nombre de usuario de la cuenta con la que se inició sesión (lo guarda Login.js)
 const CURRENT_USER_KEY = 'cinemorfosisCurrentUser';
@@ -343,23 +312,20 @@ function clearSession() {
   localStorage.removeItem(CURRENT_USER_KEY);
 }
 
-// Si es invitado, cambiamos el contenido del menú de la personita:
+// Si es invitado, cambiamos el contenido del menú del usuario:
 // en vez de "Mi perfil / Mis eventos / Cerrar sesión" mostramos un
 // aviso y un link para ir a iniciar sesión. Si está logueado, no
 // tocamos nada (se deja el menú tal cual está escrito en el HTML).
 function renderAvatarMenu() {
   const logoutLink = avatarDropdown.querySelector('.logout');
 
-  // Si en algún momento hay un "Cerrar sesión" real, que además
-  // borre la sesión guardada al tocarlo.
+  
   if (logoutLink) {
     logoutLink.addEventListener('click', clearSession);
   }
 
   if (isGuest()) {
-    // El link de "Cerrar sesión" ya apunta bien a Login.html desde
-    // cualquier profundidad de carpetas (../Login o ../../Login),
-    // así que reusamos esa misma ruta en vez de escribirla de nuevo.
+    
     const loginHref = logoutLink ? logoutLink.getAttribute('href') : '#';
 
     avatarDropdown.innerHTML = `
@@ -371,20 +337,6 @@ function renderAvatarMenu() {
 
 renderAvatarMenu();
 
-// Lo exponemos para que otros scripts (como el de los seminarios)
-// puedan preguntar "¿esta persona es invitada?" sin duplicar lógica.
-// ===================================================================
-// MIS EVENTOS (seminarios a los que la persona se inscribió)
-//
-// Todavía no hay backend, así que las inscripciones se guardan en
-// localStorage, separadas por cuenta, con esta forma:
-//   cinemorfosisEvents = {
-//     "<usuario en minúsculas>": [ { id, title, category, ... }, ... ]
-//   }
-// Así, si en la misma compu entran dos cuentas distintas, cada una ve
-// solo sus propios eventos. Cuando exista un backend real, solo hay que
-// reemplazar estas funciones por llamadas a la API.
-// ===================================================================
 const EVENTS_KEY = 'cinemorfosisEvents';
 
 // Identifica a la persona logueada. Si inició sesión pero no tenemos su
@@ -432,8 +384,6 @@ function registerEvent(eventData) {
   return true;
 }
 
-// Lo exponemos para que otros scripts (como el de los seminarios o
-// el de "Mis eventos") puedan usar estas funciones sin duplicar lógica.
 window.Cinemorfosis = {
   isGuest,
   getSession,

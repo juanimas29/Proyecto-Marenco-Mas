@@ -1,18 +1,10 @@
-// Datos de ejemplo. Reemplazá esto por la fuente real (API, JSON, etc.)
-// cuando esté disponible — el resto del código no necesita cambiar,
-// solo espera que cada objeto tenga esta forma.
-//
-// "image" es opcional: si la ruta no existe o no la definís, la tarjeta
-// muestra el degradé de marca como respaldo (no rompe nada). Seguí la
-// misma convención de carpeta que ya usás para Cine.png / Films.png /
-// Seminarios.png: poné tus fotos en Imagenes/Seminarios/ y apuntá ahí.
 window.SEMINARIOS = [
   {
     id: 'direccion-actores',
     title: 'Dirección de actores en el under',
     category: 'Dirección',
     icon: 'megaphone-outline',
-    image: 'Proyecto-Marenco-Mas\Imagenes\direcciondepeliculas.webp',
+    image: '../../Imagenes/Direccion de Pelicula.webp',
     shortDesc: 'Herramientas prácticas para dirigir actores con poco tiempo y menos presupuesto.',
     fullDesc: [
       'Este seminario está pensado para directores y directoras que trabajan en producciones independientes, donde los ensayos son pocos y los recursos, limitados.',
@@ -38,7 +30,7 @@ window.SEMINARIOS = [
     title: 'Guion: de la idea al primer borrador',
     category: 'Guion',
     icon: 'create-outline',
-    image: 'Proyecto-Marenco-Mas\Imagenes\guion-primer-borrador.webp',
+    image: '../../Imagenes/Guion.webp',
     shortDesc: 'Un taller de cuatro semanas para llevar esa idea que tenés dando vueltas a un guion real.',
     fullDesc: [
       'Muchas historias se quedan en la cabeza porque falta un método para bajarlas al papel. Este taller propone un recorrido de cuatro semanas para pasar de una idea suelta a un primer borrador completo.',
@@ -64,7 +56,7 @@ window.SEMINARIOS = [
     title: 'Fotografía cinematográfica: luz natural',
     category: 'Fotografía',
     icon: 'aperture-outline',
-    image: 'Proyecto-Marenco-Mas/Imagenes/fotografia-luz-natural.webp',
+    image: '../../Imagenes/Director Grabacion.webp',
     shortDesc: 'Aprendé a leer y aprovechar la luz disponible en locación, sin depender de equipo caro.',
     fullDesc: [
       'La luz natural es el recurso más accesible y el más difícil de controlar. En este seminario vas a aprender a observarla, anticiparla y usarla a favor de tu historia.',
@@ -90,7 +82,7 @@ window.SEMINARIOS = [
     title: 'Cine argentino contemporáneo: charla abierta',
     category: 'Industria',
     icon: 'chatbubbles-outline',
-    image: '../../Imagenes/Seminarios/cine-argentino-charla.jpg',
+    image: '../../Imagenes/Cine Contemporaneo Argentino.webp',
     shortDesc: 'Un panel de críticos conversa sobre el presente del cine nacional y hacia dónde va.',
     fullDesc: [
       'Convocamos a un panel de críticos y programadores para conversar, en formato abierto, sobre el estado del cine argentino: qué se está filmando, qué se está exhibiendo y qué caminos se abren para las nuevas generaciones.',
@@ -116,7 +108,7 @@ window.SEMINARIOS = [
     title: 'Postproducción de sonido para cortometrajes',
     category: 'Sonido',
     icon: 'headset-outline',
-    image: '../../Imagenes/Seminarios/postproduccion-sonido.jpg',
+    image: '../../Imagenes/Produccion Sonido.webp',
     shortDesc: 'Diseño sonoro y mezcla final aplicados a proyectos de bajo presupuesto.',
     fullDesc: [
       'El sonido suele ser lo último en lo que se piensa y lo primero que se nota si está mal resuelto. Este seminario recorre el proceso de postproducción de sonido pensado para cortometrajes.',
@@ -142,7 +134,7 @@ window.SEMINARIOS = [
     title: 'Producción independiente: tu primer rodaje',
     category: 'Producción',
     icon: 'clipboard-outline',
-    image: '../../Imagenes/Seminarios/produccion-primer-rodaje.jpg',
+    image: '../../Imagenes/Filmshoot.webp',
     shortDesc: 'Organizá presupuesto, plan de rodaje y equipo para filmar tu primer proyecto propio.',
     fullDesc: [
       'Filmar no depende solo de tener una buena idea: depende de organizarla. Este seminario recorre, paso a paso, cómo armar la producción de un primer proyecto propio con recursos limitados.',

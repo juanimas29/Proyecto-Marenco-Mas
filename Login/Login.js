@@ -1,21 +1,23 @@
 const wrapper = document.querySelector('.wrapper');
 
-// ===== Fondo mosaico tipo "pared de cine" =====
+// Fondo collage con imagenes.
+
 const cinemaImages = [
-  '../Imagenes/filmshoot.webp',
-  '../Imagenes/cinematographic photography.webp',
-  '../Imagenes/direcciondepeliculas.webp',
-  '../Imagenes/screanplay.webp',
-  '../Imagenes/soundproduction.webp',
-  '../Imagenes/cinecontemporaneoargentino.webp',
+  '../Imagenes/Filmshoot.webp',
+  '../Imagenes/Director Grabacion.webp',
+  '../Imagenes/Direccion de Pelicula.webp',
+  '../Imagenes/Guion.webp',
+  '../Imagenes/Produccion Sonido.webp',
+  '../Imagenes/Cine Contemporaneo Argentino.webp',
 ];
+
+// Función que arma el bloque (fondo con imagenes).
 
 function buildCinemaBackdrop() {
   const backdrop = document.getElementById('cinemaBackdrop');
   if (!backdrop) return;
 
-  const tileSize = 170; // debe coincidir con grid-auto-rows / minmax del CSS
-  // Factor extra porque el mosaico está rotado y escalado (rotate + scale en el CSS)
+  const tileSize = 170; 
   const overscan = 1.7;
   const cols = Math.ceil((window.innerWidth * overscan) / tileSize) + 1;
   const rows = Math.ceil((window.innerHeight * overscan) / tileSize) + 1;
@@ -34,15 +36,15 @@ function buildCinemaBackdrop() {
 buildCinemaBackdrop();
 window.addEventListener('resize', buildCinemaBackdrop);
 
-// Si llegamos desde otra página con un link tipo Login.html#signup
-// (por ejemplo, desde "Crear una cuenta" al querer inscribirte a un
-// seminario sin estar logueado), abrimos directamente ese panel.
+// Si se llega desde otro link, manda a loguearte.
+
 const initialView = window.location.hash.replace('#', '');
 if (initialView === 'signup' || initialView === 'forgot') {
   wrapper.dataset.view = initialView;
 }
 
 // Cambios de panel por data-view
+
 document.querySelectorAll('a[data-view], button[data-view]').forEach((el) => {
   el.addEventListener('click', (e) => {
     e.preventDefault();
@@ -50,7 +52,8 @@ document.querySelectorAll('a[data-view], button[data-view]').forEach((el) => {
   });
 });
 
-// Event listener para los ojitos de contraseña
+// Privacidad de contraseña (si se toca el ícono de ojo, cambia a puntos).
+
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains('toggle-password')) {
     const icon = e.target;
@@ -67,12 +70,8 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// ===== "Base de datos" de usuarios =====
-// Todavía no hay backend, así que las cuentas registradas se guardan en
-// localStorage (clave 'cinemorfosisUsers'). Cada cuenta es:
-//   { user, email, passHash }
-// La contraseña nunca se guarda en texto plano: se guarda su hash SHA-256.
-// Cuando haya backend real, solo hay que reemplazar estas funciones.
+// "Base de datos" de usuarios (se guarda en el navegador). 
+
 const USERS_KEY = 'cinemorfosisUsers';
 
 function loadUsers() {
@@ -88,7 +87,6 @@ function saveUsers(users) {
 }
 
 async function hashPassword(text) {
-  // crypto.subtle solo existe en contextos seguros (https / localhost).
   if (window.crypto && window.crypto.subtle) {
     const data = new TextEncoder().encode(text);
     const buf = await crypto.subtle.digest('SHA-256', data);
@@ -141,9 +139,7 @@ signInForm.addEventListener('submit', async (e) => {
   }
 });
 
-// Entrar como invitado: se puede recorrer el sitio, pero más
-// adelante (comprar entradas, inscribirse a un seminario) se va a
-// pedir iniciar sesión o registrarse.
+// Entrar como invitado.
 const guestLink = document.getElementById('guestLink');
 
 guestLink.addEventListener('click', (e) => {
@@ -210,7 +206,7 @@ forgotForm.addEventListener('submit', async (e) => {
     return;
   }
 
-  // Reemplaza la contraseña guardada: desde ahora se entra con la nueva.
+  // Reemplaza la contraseña guardada.
   account.passHash = await hashPassword(newPassword.value);
   saveUsers(users);
 

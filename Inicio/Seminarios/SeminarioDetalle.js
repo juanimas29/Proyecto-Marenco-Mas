@@ -1,14 +1,3 @@
-// Este mismo archivo se usa en las 6 páginas de detalle. No sabe nada
-// de "qué seminario es": solo busca estos elementos por su id/clase
-// en la página donde se cargó, y si los encuentra, los hace funcionar.
-//
-//  - #btnInscribir            -> el botón "Inscribirme"
-//  - #semPayWrap (opcional)   -> el bloque del formulario de pago.
-//                                Si NO existe, es un seminario gratuito
-//                                y el botón confirma directo.
-//                                Si SÍ existe, es un seminario pago
-//                                y el botón revela el formulario.
-
 (function () {
   const btnInscribir = document.getElementById('btnInscribir');
   const msg = document.getElementById('semTicketMsg');
@@ -16,19 +5,14 @@
   const payWrap = document.getElementById('semPayWrap');
   const authGate = document.getElementById('semAuthGate');
 
-  if (!btnInscribir) return; // esta página no tiene ticket, no hacemos nada
+  if (!btnInscribir) return; 
 
-  // Cinemorfosis.isGuest() viene de Inicio.js (se carga antes que este
-  // archivo en el HTML). Si por algún motivo no está disponible,
-  // tratamos a la persona como invitada por las dudas.
+  
   function personaEsInvitada() {
     return window.Cinemorfosis ? window.Cinemorfosis.isGuest() : true;
   }
 
-  // ---------- Inscripciones guardadas ("Mis eventos") ----------
-  // Estas páginas son estáticas, así que los datos del seminario se
-  // leen de la propia página. El id sale del nombre del archivo
-  // (ej: "Detalle-Direccion").
+ 
   const archivo = decodeURIComponent(window.location.pathname.split('/').pop());
   const eventoId = archivo.replace(/\.html?$/i, '') || 'seminario';
 
@@ -55,7 +39,7 @@
       duration: textoDeIcono('time-outline'),
       place: textoDeIcono('navigate-outline'),
       price: texto('.sem-ticket-price .value'),
-      page: 'Seminarios/' + archivo, // ruta desde la carpeta Inicio/
+      page: 'Seminarios/' + archivo, 
     };
   }
 
@@ -76,8 +60,7 @@
 
   const MENSAJE_YA_INSCRIPTO = 'Ya estás inscripto/a. Lo ves en "Mis eventos".';
 
-  // Si ya se había inscripto antes (cerró y volvió a abrir la página),
-  // mostramos directamente el estado confirmado en vez del botón.
+  
   if (
     window.Cinemorfosis &&
     !window.Cinemorfosis.isGuest() &&
@@ -97,7 +80,7 @@
   }
 
   if (!payWrap) {
-    // ---------- Seminario GRATUITO: confirmar directo ----------
+   
     btnInscribir.addEventListener('click', () => {
       if (personaEsInvitada()) {
         mostrarBarreraDeLogin();
@@ -110,7 +93,6 @@
     return;
   }
 
-  // ---------- Seminario PAGO: mostrar el formulario de pago ----------
   const form = document.getElementById('semPayForm');
   const numberInput = document.getElementById('cardNumber');
   const expiryInput = document.getElementById('cardExpiry');
@@ -207,7 +189,7 @@
       return;
     }
 
-    // Todo OK: simulamos el procesamiento del pago
+
     btnPagar.disabled = true;
     btnPagar.textContent = 'Procesando pago...';
 

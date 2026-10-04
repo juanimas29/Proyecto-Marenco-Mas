@@ -1,33 +1,8 @@
-// ===================================================================
-// SELECTOR DE ENTRADAS DE CINE
-//
-// Esto NO compra entradas de forma automática: ningún cine de Córdoba
-// ofrece una API pública para reservar butacas desde afuera. Lo que
-// hacemos acá es ayudar a elegir película + complejo,
-// y después mandar a la persona directo a la cartelera oficial de ese
-// complejo (en una pestaña nueva) para que termine la compra ahí.
-//
-// Todo el código está adentro de DOMContentLoaded y cada bloque tiene
-// su propio try/catch a propósito: si un pedido a TMDB falla, el
-// resto del formulario (complejo) tiene que seguir
-// funcionando igual.
-// ===================================================================
-
 document.addEventListener('DOMContentLoaded', () => {
   const TMDB_API_KEY = 'f5e63df2afa3ae459863c535bd3f8a62';
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
-  // Complejos de cine de Córdoba (los mismos que figuran en el mapa de
-  // abajo, salvo el Cineclub Municipal, que no tiene cartelera semanal
-  // de estrenos). Las cadenas con varias sedes (Cinemark Hoyts,
-  // Showcase, Dino) figuran como UNA sola opción: la sede puntual se
-  // elige después en el sitio oficial.
-  // El link lleva a la cartelera/venta oficial del cine: no tenemos
-  // forma de armar un link directo a "esta función de esta película en
-  // esta sala" porque esa parte vive en el sistema interno de cada cine.
-  //
-  // cadena: 'cinemark' => al elegir el complejo se abre directo la
-  // página de la película en Cinemark (ver urlCinemarkPelicula).
+
   const COMPLEJOS = [
     {
       id: 'cinemark-hoyts',
@@ -78,8 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Cinemark arma la URL de cada película así:
   //   https://www.cinemark.com.ar/pelicula/resident-evil-noche-cero
-  // Si el título de TMDB no coincide con el que usa Cinemark, agregá
-  // acá la excepción:  'Título en TMDB': 'slug-en-cinemark'
+  
   const CINEMARK_PELICULA_BASE = 'https://www.cinemark.com.ar/pelicula/';
   const SLUGS_CINEMARK = {
     // 'Spider-Man: Un Nuevo Día': 'spider-man-un-nuevo-dia',
@@ -105,22 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const infoChipText = document.getElementById('cineInfoChipText');
   const cineForm = document.getElementById('cineSelectorForm');
 
-  // id de TMDB -> objeto película, para mostrar duración/estreno
-  // cuando corresponda.
+
   const peliculasPorId = {};
 
-  // --------------------------------------------------------------
-  // DESPLEGABLE PROPIO (siempre se abre hacia ABAJO)
-  //
-  // El <select> nativo del navegador decide solo si la lista se abre
-  // hacia arriba o hacia abajo (según el espacio que quede en
-  // pantalla) y no se puede controlar con CSS. Por eso dibujamos
-  // nuestro propio desplegable arriba del <select> real, que queda
-  // oculto pero sigue siendo el que guarda el valor elegido: así el
-  // resto del código (movieSelect.value, evento 'change', etc.) no
-  // cambia. Si en el futuro se agregan opciones al <select>, el
-  // desplegable se actualiza solo.
-  // --------------------------------------------------------------
+
   function crearDesplegable(select) {
     if (!select) return;
 
@@ -244,8 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!wrap.contains(e.target)) cerrar();
     });
 
-    // Si cambian las opciones del <select> (por ejemplo cuando llega la
-    // cartelera de TMDB), volvemos a dibujar la lista.
+   
     new MutationObserver(render).observe(select, { childList: true });
 
     render();
@@ -254,9 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
   crearDesplegable(movieSelect);
   crearDesplegable(complejoSelect);
 
-  // --------------------------------------------------------------
-  // 1) COMPLEJO: no depende de ninguna API, se arma siempre.
-  // --------------------------------------------------------------
   try {
     if (complejoSelect) {
       COMPLEJOS.forEach((c) => {
@@ -270,11 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Error al armar el select de complejos:', error);
   }
 
-  // --------------------------------------------------------------
-  // 2) PELÍCULA: se intenta traer la cartelera real de TMDB. Si
-  //    falla, se usa la lista de respaldo para que el select nunca
-  //    quede vacío ni "cargando" para siempre.
-  // --------------------------------------------------------------
   function llenarSelectConRespaldo() {
     if (!movieSelect) return;
     movieSelect.innerHTML = '<option value="" disabled selected hidden>Elegí una película</option>';
@@ -315,9 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         movieSelect.appendChild(opt);
       });
     } catch (error) {
-      // Dejamos el detalle en consola (F12 → Console) para poder
-      // diagnosticar, y usamos la cartelera de respaldo para que el
-      // formulario siga siendo usable.
+      
       console.error('No se pudo cargar la cartelera de TMDB, uso respaldo:', error);
       llenarSelectConRespaldo();
     } finally {
@@ -344,9 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
       : `${peli.title} · estreno ${estreno}`;
     infoChip.classList.add('visible');
 
-    // TMDB no siempre trae "runtime" en el listado de "now playing"
-    // (solo en el detalle de cada película), así que si falta lo
-    // pedimos aparte la primera vez que se elige esa película.
+    
     if (!peli.runtime) completarDuracion(peli.id);
   }
 
@@ -372,9 +321,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cargarCarteleraCordoba();
 
-  // --------------------------------------------------------------
-  // 3) ENVÍO DEL FORMULARIO
-  // --------------------------------------------------------------
   if (cineForm) {
     cineForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -392,10 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Abrimos la cartelera oficial del complejo en una pestaña
-      // nueva. No podemos completar la compra por él: cada cadena
-      // maneja su propio sistema de butacas y no expone una forma de
-      // integrarlo desde afuera.
+      
       // Cinemark: link directo a la película elegida. Otras cadenas:
       // cartelera general del complejo.
       const esCinemark = complejo.cadena === 'cinemark';

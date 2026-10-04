@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Paleta oficial Cinemorfosis (misma que login) */
   --ink: #000000;
   --secondary: #700000;
   --primary: #CD1A0B;
@@ -24,7 +23,6 @@ body {
   color: var(--ink);
 }
 
-/* ============ FILM STRIP (misma pieza que login) ============ */
 .film-strip {
   width: 100%;
   height: 14px;
@@ -37,7 +35,6 @@ body {
   background-position: 10px center;
 }
 
-/* ============ HERO ============ */
 .hero {
   position: relative;
   overflow: hidden;
@@ -290,7 +287,7 @@ body {
 .search-btn:hover { background: var(--secondary); }
 .search-btn:active { transform: scale(.97); }
 
-/* ===== Resultados en vivo del buscador de películas (hero) ===== */
+/* Resultados en vivo del buscador de películas */
 .search-wrap {
   position: relative;
   max-width: 480px;
@@ -367,7 +364,7 @@ body {
 }
 .movie-live-results .see-all:hover { color: var(--secondary); }
 
-/* ============ HUB (Cine / Películas / Seminarios) ============ */
+
 .hub {
   max-width: 1080px;
   margin: 0 auto;
@@ -409,7 +406,7 @@ body {
   display: block;
   transition: transform .35s ease;
 }
-/* velo sutil en burdeos al hacer hover, mismo lenguaje que el resto del sitio */
+
 .hub-card-icon::after {
   content: '';
   position: absolute;
@@ -421,7 +418,7 @@ body {
 .hub-card:hover .hub-card-icon img { transform: scale(1.06); }
 .hub-card:hover .hub-card-icon::after { opacity: 0.18; }
 
-/* Línea de "corte" de boleto, con muescas semicirculares en los bordes */
+
 .hub-card-tear {
   position: relative;
   height: 0;
@@ -456,7 +453,7 @@ body {
   color: #4a4a46;
 }
 
-/* ============ FOOTER ============ */
+
 .site-footer {
   text-align: center;
   padding-bottom: 26px;
@@ -467,7 +464,7 @@ body {
   color: var(--secondary);
 }
 
-/* ============ SUBPÁGINAS (Cine / Películas / Seminarios) ============ */
+
 .subpage-header {
   display: flex;
   align-items: center;
@@ -551,7 +548,7 @@ body {
 }
 .cta-volver ion-icon { font-size: 16px; }
 
-/* ============ MAPA DE CINES (subpágina Cine) ============ */
+
 .cine-map {
   max-width: 1000px;
   margin: 0 auto;
@@ -605,7 +602,6 @@ body {
   .cine-map-frame { height: 420px; border-radius: 18px; }
 }
 
-/* ============ RESPONSIVE ============ */
 @media (max-width: 860px) {
   .hub { max-width: 460px; }
   .hub-card { flex: 1 1 100%; }

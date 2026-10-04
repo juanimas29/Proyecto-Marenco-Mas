@@ -1,27 +1,27 @@
+/* Descarga tipografías específicas para utilizar en la página */
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
 
-:root {
-  /* Paleta oficial Cinemorfosis */
-  --ink: #000000;        /* Negro — texto principal y contornos */
-  --secondary: #700000;  /* Burdeos Profundo — bordes, sombras, texto secundario */
-  --primary: #CD1A0B;    /* Rojo Vibrante — botones e interacciones */
-  --bg: #FFFFF6;         /* Off-White — fondo principal */
-  --surface: #FFFFFF;    /* blanco puro — superficie de inputs */
-  --adv: #FFC33F;        /* acento ámbar — detalles de boleto */
+:root { /* Paleta elegida */
+  --ink: #000000;        /* Negro — Texto principal y contornos */
+  --secondary: #700000;  /* Bordo — Bordes, sombras, texto secundario */
+  --primary: #CD1A0B;    /* Rojo — Botones e interacciones */
+  --bg: #FFFFF6;         /* Blanco — Fondo principal */
+  --surface: #FFFFFF;    /* Blanco puro — Campos */
+  --adv: #FFC33F;        /* Amarillo — Detalles de entrada */
   --error: #B3261E;
   --ok: #90E1FF;
   --info: #E0D2C9;
-  --card-h: 710px;       /* alto de UN panel — única fuente de verdad para las 3 vistas */
+  --card-h: 710px;       /* Alto de un panel (un formulario de 3) */
 }
 
-* {
+* { /* Aplica a todos los elementos */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
 
-body {
+body { /* Configuración inicial para cada formulario */
   position: relative;
   display: flex;
   justify-content: center;
@@ -30,10 +30,11 @@ body {
   padding: 24px;
   background: var(--ink);
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: auto; /* Permite scroll vertical */
 }
 
-/* ===== Fondo tipo "pared de cine" con mosaico de fotos (estilo Netflix) ===== */
+/* Fondo de página (estilo collage de fotos de cine */
+
 .cinema-backdrop {
   position: fixed;
   inset: -10%;
@@ -47,7 +48,7 @@ body {
   transform-origin: center;
 }
 
-.cinema-backdrop::after {
+.cinema-backdrop::after { /* Fondo negro superpuesto */
   content: '';
   position: absolute;
   inset: 0;
@@ -57,7 +58,7 @@ body {
   z-index: 1;
 }
 
-.cinema-backdrop .tile {
+.cinema-backdrop .tile { /* Cada celda (cada imágen) */
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -65,7 +66,7 @@ body {
   opacity: .95;
 }
 
-.wrapper {
+.wrapper { /*Esquema para armar el formulario*/
   z-index: 2;
   position: relative;
   width: 100%;
@@ -75,10 +76,11 @@ body {
   box-shadow: 0 0 0 3px var(--primary), 0 25px 60px rgba(0, 0, 0, 0.18);
   border-radius: 28px;
   padding: 40px 34px 30px;
-  overflow: hidden;
+  overflow: hidden; /*Esconde los demás formularios apilados*/
 }
 
-/* Perforación estilo boleto de cine, arriba y abajo de la tarjeta */
+/* Tiras de cine arriba y abajo de cada formulario */
+
 .film-strip {
   position: absolute;
   left: 0;
@@ -101,9 +103,14 @@ body {
   flex-direction: column;
   transition: transform 1s ease-in-out;
 }
+
+/* Para cambiar de formulario y desplazarse por la página */ 
+
 .wrapper[data-view="signin"]  .track { transform: translateY(0); }
 .wrapper[data-view="signup"]  .track { transform: translateY(calc(-1 * var(--card-h))); }
 .wrapper[data-view="forgot"]  .track { transform: translateY(calc(-2 * var(--card-h))); }
+
+/* Para que mantenga el mismo tamaño */
 
 .form-wrapper {
   flex: 0 0 var(--card-h);
@@ -138,20 +145,20 @@ form {
   margin: 0 0 20px;
 }
 
-.panel-hint {
+.panel-hint { /* Recuperar contraseña */
   color: var(--secondary);
   font-size: 13px;
   font-weight: 500;
   margin: -10px 0 18px;
 }
 
-/* El panel de "olvidé mi contraseña" no lleva slogan, así que el logo
-   necesita el margen inferior original para no quedar pegado al hint */
+
 .forgot-password .brand-logo {
   margin-bottom: 22px;
 }
 
-/* Inputs y estructura */
+/* Estructura para campos */
+
 .input-group {
   position: relative;
   width: 100%;
@@ -185,6 +192,7 @@ form {
 
 .input-group input::placeholder { color: transparent; }
 
+/* Cuando se escribe, el borde del campo se pinta */
 .input-group input:focus,
 .input-group input:not(:placeholder-shown) {
   border-color: var(--primary);
@@ -218,6 +226,7 @@ form {
 }
 
 /* Ícono Ojo */
+
 .toggle-password {
   position: absolute;
   right: 18px;
@@ -271,6 +280,8 @@ form {
 }
 .form-message.error { color: var(--error); }
 .form-message.success { color: var(--secondary); }
+
+/* Flecha como botón */
 
 .cta {
   width: 56px;
@@ -356,6 +367,8 @@ form {
 }
 .guest-link a:hover { color: var(--primary); }
 .guest-link a ion-icon { font-size: 14px; }
+
+/* Para pantallas chicas */
 
 @media (max-width: 420px) {
   :root { --card-h: 690px; }

@@ -1,8 +1,3 @@
-// Este script NO crea tarjetas ni guarda datos: las 6 tarjetas ya
-// están escritas directamente en Seminarios.html. Lo único que hace
-// es mostrar u ocultar esas tarjetas existentes según lo que se
-// busque o el filtro de categoría que esté activo.
-
 (function () {
   const cards = Array.from(document.querySelectorAll('.sem-card'));
   const searchInput = document.getElementById('semSearch');
@@ -37,7 +32,7 @@
   // Escribir en el buscador vuelve a aplicar el filtro
   searchInput.addEventListener('input', applyFilters);
 
-  // Tocar un chip de categoría marca ese chip como activo y filtra
+  
   filterBar.addEventListener('click', (event) => {
     const chip = event.target.closest('.sem-chip');
     if (!chip) return;

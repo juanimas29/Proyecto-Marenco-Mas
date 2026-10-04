@@ -25,6 +25,68 @@
     return window.Cinemorfosis ? window.Cinemorfosis.isGuest() : true;
   }
 
+  // ---------- Inscripciones guardadas ("Mis eventos") ----------
+  // Estas páginas son estáticas, así que los datos del seminario se
+  // leen de la propia página. El id sale del nombre del archivo
+  // (ej: "Detalle-Direccion").
+  const archivo = decodeURIComponent(window.location.pathname.split('/').pop());
+  const eventoId = archivo.replace(/\.html?$/i, '') || 'seminario';
+
+  function textoDeIcono(nombre) {
+    const icono = document.querySelector(
+      `.sem-ticket-details ion-icon[name="${nombre}"]`
+    );
+    return icono ? icono.parentElement.textContent.trim() : '';
+  }
+
+  function datosDelSeminario() {
+    const texto = (selector) => {
+      const el = document.querySelector(selector);
+      return el ? el.textContent.trim() : '';
+    };
+    const banner = document.querySelector('.sem-hero-banner ion-icon');
+
+    return {
+      id: eventoId,
+      title: texto('.sem-detail-main h1'),
+      category: texto('.sem-detail-main .sem-card-tag'),
+      icon: banner ? banner.getAttribute('name') : 'ticket-outline',
+      date: textoDeIcono('calendar-outline'),
+      duration: textoDeIcono('time-outline'),
+      place: textoDeIcono('navigate-outline'),
+      price: texto('.sem-ticket-price .value'),
+      page: 'Seminarios/' + archivo, // ruta desde la carpeta Inicio/
+    };
+  }
+
+  // Guarda la inscripción y deja el botón en estado "confirmada".
+  function confirmarInscripcion(mensaje) {
+    if (window.Cinemorfosis) window.Cinemorfosis.registerEvent(datosDelSeminario());
+    mostrarInscripcionConfirmada(mensaje);
+  }
+
+  function mostrarInscripcionConfirmada(mensaje) {
+    btnInscribir.hidden = false;
+    btnInscribir.disabled = true;
+    btnInscribir.textContent = 'Inscripción confirmada ✓';
+    if (payWrap) payWrap.hidden = true;
+    if (fine) fine.hidden = true;
+    if (msg) msg.textContent = mensaje;
+  }
+
+  const MENSAJE_YA_INSCRIPTO = 'Ya estás inscripto/a. Lo ves en "Mis eventos".';
+
+  // Si ya se había inscripto antes (cerró y volvió a abrir la página),
+  // mostramos directamente el estado confirmado en vez del botón.
+  if (
+    window.Cinemorfosis &&
+    !window.Cinemorfosis.isGuest() &&
+    window.Cinemorfosis.isRegisteredToEvent(eventoId)
+  ) {
+    mostrarInscripcionConfirmada(MENSAJE_YA_INSCRIPTO);
+    return;
+  }
+
   // Si es invitado: oculta el botón (y el formulario de pago, si lo
   // hubiera) y muestra el aviso de "necesitás una cuenta".
   function mostrarBarreraDeLogin() {
@@ -41,9 +103,9 @@
         mostrarBarreraDeLogin();
         return;
       }
-      btnInscribir.disabled = true;
-      btnInscribir.textContent = 'Inscripción confirmada ✓';
-      if (msg) msg.textContent = 'Te enviamos la confirmación con todos los detalles.';
+      confirmarInscripcion(
+        'Te enviamos la confirmación con todos los detalles. Lo ves en "Mis eventos".'
+      );
     });
     return;
   }
@@ -150,9 +212,9 @@
     btnPagar.textContent = 'Procesando pago...';
 
     setTimeout(() => {
-      payWrap.hidden = true;
-      if (fine) fine.hidden = false;
-      if (msg) msg.textContent = 'Te enviamos el comprobante y la confirmación por email.';
+      confirmarInscripcion(
+        'Te enviamos el comprobante y la confirmación por email. Lo ves en "Mis eventos".'
+      );
     }, 1200);
   });
 })();

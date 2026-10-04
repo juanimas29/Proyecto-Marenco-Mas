@@ -128,6 +128,122 @@
   margin-top: 64px;
 }
 
+/* ============ DESPLEGABLE PROPIO (se abre siempre hacia abajo) ============ */
+.cselect {
+  position: relative;
+  width: 100%;
+}
+
+/* El <select> real queda oculto: solo guarda el valor elegido. */
+.cselect-native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cselect-btn {
+  width: 100%;
+  height: 42px;
+  padding: 0 38px 0 12px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: border-color .15s ease;
+}
+
+.cselect-btn::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform .15s ease;
+}
+
+.cselect.open .cselect-btn::after {
+  transform: translateY(-30%) rotate(-135deg);
+}
+
+.cselect-btn:hover,
+.cselect-btn:focus-visible,
+.cselect.open .cselect-btn {
+  border-color: var(--primary);
+}
+
+.cselect-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+}
+
+.cselect-list[hidden] { display: none; }
+
+.cselect-list li {
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  outline: none;
+}
+
+.cselect-list li:hover,
+.cselect-list li:focus {
+  background: var(--info);
+}
+
+.cselect-list li.selected {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ============ MAPA SIN LA BARRA OSCURA DE GOOGLE ============
+   El mapa embebido trae arriba una barra con el nombre del mapa y el
+   autor. No se puede ocultar desde adentro (es de otro dominio), así
+   que subimos el iframe y lo agrandamos esa misma cantidad: el marco
+   (overflow: hidden) recorta la barra. Si Google cambia la altura de
+   la barra, ajustá solo este valor. */
+.cine-map-frame {
+  --map-header-h: 60px;
+  position: relative;
+}
+
+.cine-map-frame iframe {
+  position: absolute;
+  top: calc(var(--map-header-h) * -1);
+  left: 0;
+  width: 100%;
+  height: calc(100% + var(--map-header-h));
+}
+
 @media (max-width: 700px) {
   .cine-selector { padding: 0 20px; }
   .cine-selector-form { padding: 14px; gap: 12px; }

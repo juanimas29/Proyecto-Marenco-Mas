@@ -327,6 +327,8 @@ if (locationChip && locationDropdown && locationList) {
 // pueden preguntar "¿esta persona está logueada?" sin repetir código.
 // ===================================================================
 const SESSION_KEY = 'cinemorfosisSession';
+// Nombre de usuario de la cuenta con la que se inició sesión (lo guarda Login.js)
+const CURRENT_USER_KEY = 'cinemorfosisCurrentUser';
 
 function getSession() {
   return localStorage.getItem(SESSION_KEY);
@@ -338,10 +340,11 @@ function isGuest() {
 
 function clearSession() {
   localStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(CURRENT_USER_KEY);
 }
 
 // Si es invitado, cambiamos el contenido del menú de la personita:
-// en vez de "Mi perfil / Mis tickets / Cerrar sesión" mostramos un
+// en vez de "Mi perfil / Mis eventos / Cerrar sesión" mostramos un
 // aviso y un link para ir a iniciar sesión. Si está logueado, no
 // tocamos nada (se deja el menú tal cual está escrito en el HTML).
 function renderAvatarMenu() {
@@ -370,7 +373,71 @@ renderAvatarMenu();
 
 // Lo exponemos para que otros scripts (como el de los seminarios)
 // puedan preguntar "¿esta persona es invitada?" sin duplicar lógica.
+// ===================================================================
+// MIS EVENTOS (seminarios a los que la persona se inscribió)
+//
+// Todavía no hay backend, así que las inscripciones se guardan en
+// localStorage, separadas por cuenta, con esta forma:
+//   cinemorfosisEvents = {
+//     "<usuario en minúsculas>": [ { id, title, category, ... }, ... ]
+//   }
+// Así, si en la misma compu entran dos cuentas distintas, cada una ve
+// solo sus propios eventos. Cuando exista un backend real, solo hay que
+// reemplazar estas funciones por llamadas a la API.
+// ===================================================================
+const EVENTS_KEY = 'cinemorfosisEvents';
+
+// Identifica a la persona logueada. Si inició sesión pero no tenemos su
+// nombre guardado (sesión vieja), usamos una clave genérica. Los
+// invitados no tienen clave: no pueden inscribirse.
+function currentUserKey() {
+  if (isGuest()) return null;
+  const name = localStorage.getItem(CURRENT_USER_KEY);
+  return name && name.trim() ? name.trim().toLowerCase() : '__sesion__';
+}
+
+function loadAllEvents() {
+  try {
+    return JSON.parse(localStorage.getItem(EVENTS_KEY)) || {};
+  } catch (err) {
+    return {};
+  }
+}
+
+function getMyEvents() {
+  const key = currentUserKey();
+  if (!key) return [];
+  return loadAllEvents()[key] || [];
+}
+
+function isRegisteredToEvent(id) {
+  return getMyEvents().some((ev) => ev.id === id);
+}
+
+// Guarda una inscripción. Devuelve false si no hay una persona logueada.
+// Si ya estaba inscripta a ese evento, no lo duplica.
+function registerEvent(eventData) {
+  const key = currentUserKey();
+  if (!key) return false;
+
+  const all = loadAllEvents();
+  const list = all[key] || [];
+
+  if (!list.some((ev) => ev.id === eventData.id)) {
+    list.push({ ...eventData, registeredAt: new Date().toISOString() });
+  }
+
+  all[key] = list;
+  localStorage.setItem(EVENTS_KEY, JSON.stringify(all));
+  return true;
+}
+
+// Lo exponemos para que otros scripts (como el de los seminarios o
+// el de "Mis eventos") puedan usar estas funciones sin duplicar lógica.
 window.Cinemorfosis = {
   isGuest,
   getSession,
+  getMyEvents,
+  isRegisteredToEvent,
+  registerEvent,
 };

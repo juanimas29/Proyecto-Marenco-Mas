@@ -1,0 +1,193 @@
+/* Página "Mis eventos". Usa las variables de color de Inicio.css. */
+
+.ev-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 36px 20px 60px;
+  min-height: 60vh;
+}
+
+.ev-heading h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--secondary);
+}
+
+.ev-heading p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #6b655b;
+}
+
+.ev-list {
+  margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ---------- Tarjeta con forma de entrada ---------- */
+.ev-card {
+  display: flex;
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(112, 0, 0, 0.10);
+  overflow: hidden;
+  position: relative;
+}
+
+.ev-stub {
+  flex: 0 0 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--secondary), var(--primary));
+  color: var(--bg);
+  font-size: 38px;
+  border-right: 2px dashed var(--info);
+  position: relative;
+}
+
+/* Muescas de la entrada */
+.ev-stub::before,
+.ev-stub::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  width: 18px;
+  height: 18px;
+  background: var(--bg);
+  border-radius: 50%;
+}
+.ev-stub::before { top: -9px; }
+.ev-stub::after { bottom: -9px; }
+
+.ev-body {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 22px;
+}
+
+.ev-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.ev-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--info);
+  color: var(--secondary);
+}
+
+.ev-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #ddd;
+  color: #555;
+}
+
+.ev-body h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.ev-meta {
+  list-style: none;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #4d483f;
+}
+
+.ev-meta ion-icon {
+  vertical-align: -2px;
+  color: var(--secondary);
+  font-size: 15px;
+}
+
+.ev-footer {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--info);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ev-registered {
+  font-size: 12px;
+  color: #8a8479;
+}
+
+.ev-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  margin-left: auto;
+}
+.ev-link:hover { text-decoration: underline; }
+
+.ev-card.is-past { opacity: .6; }
+
+/* ---------- Estados vacíos ---------- */
+.ev-empty {
+  margin-top: 40px;
+  text-align: center;
+  padding: 40px 20px;
+}
+.ev-empty[hidden] { display: none; }
+
+.ev-empty > ion-icon {
+  font-size: 54px;
+  color: var(--secondary);
+}
+
+.ev-empty h3 {
+  margin-top: 10px;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 21px;
+  color: var(--ink);
+}
+
+.ev-empty p {
+  margin: 6px auto 20px;
+  max-width: 380px;
+  font-size: 14px;
+  color: #6b655b;
+}
+
+.ev-btn {
+  display: inline-block;
+  padding: 13px 28px;
+  border-radius: 999px;
+  background: var(--secondary);
+  color: var(--bg);
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 14.5px;
+  text-decoration: none;
+  box-shadow: 0 5px 0 var(--ink);
+}
+.ev-btn:hover { background: var(--primary); }
+
+@media (max-width: 560px) {
+  .ev-stub { flex-basis: 64px; font-size: 28px; }
+  .ev-body { padding: 16px; }
+}

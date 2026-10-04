@@ -3,13 +3,13 @@
 //
 // Esto NO compra entradas de forma automática: ningún cine de Córdoba
 // ofrece una API pública para reservar butacas desde afuera. Lo que
-// hacemos acá es ayudar a elegir película + complejo + día + horario,
+// hacemos acá es ayudar a elegir película + complejo,
 // y después mandar a la persona directo a la cartelera oficial de ese
 // complejo (en una pestaña nueva) para que termine la compra ahí.
 //
 // Todo el código está adentro de DOMContentLoaded y cada bloque tiene
 // su propio try/catch a propósito: si un pedido a TMDB falla, el
-// resto del formulario (complejo, día, horario) tiene que seguir
+// resto del formulario (complejo) tiene que seguir
 // funcionando igual.
 // ===================================================================
 
@@ -17,36 +17,48 @@ document.addEventListener('DOMContentLoaded', () => {
   const TMDB_API_KEY = 'f5e63df2afa3ae459863c535bd3f8a62';
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
-  // Complejos de cine que efectivamente operan en Córdoba Capital hoy.
-  // El link lleva a la cartelera/venta oficial de la cadena: no
-  // tenemos forma de armar un link directo a "esta función de esta
-  // película en esta sala" porque esa parte vive en el sistema
-  // interno de cada cine.
+  // Complejos de cine de Córdoba (los mismos que figuran en el mapa de
+  // abajo, salvo el Cineclub Municipal, que no tiene cartelera semanal
+  // de estrenos). Las cadenas con varias sedes (Cinemark Hoyts,
+  // Showcase, Dino) figuran como UNA sola opción: la sede puntual se
+  // elige después en el sitio oficial.
+  // El link lleva a la cartelera/venta oficial del cine: no tenemos
+  // forma de armar un link directo a "esta función de esta película en
+  // esta sala" porque esa parte vive en el sistema interno de cada cine.
   //
   // cadena: 'cinemark' => al elegir el complejo se abre directo la
   // página de la película en Cinemark (ver urlCinemarkPelicula).
   const COMPLEJOS = [
     {
-      id: 'hoyts-nuevocentro',
-      nombre: 'Cinemark Hoyts · Nuevocentro Shopping',
+      id: 'cinemark-hoyts',
+      nombre: 'Cinemark Hoyts',
       url: 'https://www.cinemark.com.ar/',
       cadena: 'cinemark',
     },
     {
-      id: 'hoyts-patio-olmos',
-      nombre: 'Cinemark Hoyts · Patio Olmos',
-      url: 'https://www.cinemark.com.ar/',
-      cadena: 'cinemark',
-    },
-    {
-      id: 'showcase-cordoba',
-      nombre: 'Showcase Cinemas · Villa Cabrera',
+      id: 'showcase',
+      nombre: 'Showcase Cinemas',
       url: 'https://www.todoshowcase.com/',
     },
     {
-      id: 'showcase-villa-allende',
-      nombre: 'Showcase Cinemas · Villa Allende',
-      url: 'https://www.todoshowcase.com/',
+      id: 'cines-dino',
+      nombre: 'Cines Dino',
+      url: 'https://cinesdino.com.ar/compra_ingresso_online_new/',
+    },
+    {
+      id: 'cinemacenter',
+      nombre: 'Cinemacenter',
+      url: 'https://www.cinemacenter.com.ar/cartelera#contenido',
+    },
+    {
+      id: 'gran-rex',
+      nombre: 'Cines Gran Rex',
+      url: 'http://cinesgranrex.com.ar/',
+    },
+    {
+      id: 'las-tipas',
+      nombre: 'Las Tipas',
+      url: 'https://cordoba.lastipas.com.ar/es-AR',
     },
   ];
 
@@ -87,16 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return CINEMARK_PELICULA_BASE + (SLUGS_CINEMARK[titulo] || slugify(titulo));
   }
 
-  const HORARIOS_LABEL = {
-    manana: 'Mañana (hasta 13 hs)',
-    tarde: 'Tarde (13 a 19 hs)',
-    noche: 'Noche (desde 19 hs)',
-  };
-
   const movieSelect = document.getElementById('cineMovieSelect');
   const complejoSelect = document.getElementById('cineComplejoSelect');
-  const diaSelect = document.getElementById('cineDiaSelect');
-  const horarioSelect = document.getElementById('cineHorarioSelect');
   const infoChip = document.getElementById('cineInfoChip');
   const infoChipText = document.getElementById('cineInfoChipText');
   const cineForm = document.getElementById('cineSelectorForm');
@@ -104,6 +108,151 @@ document.addEventListener('DOMContentLoaded', () => {
   // id de TMDB -> objeto película, para mostrar duración/estreno
   // cuando corresponda.
   const peliculasPorId = {};
+
+  // --------------------------------------------------------------
+  // DESPLEGABLE PROPIO (siempre se abre hacia ABAJO)
+  //
+  // El <select> nativo del navegador decide solo si la lista se abre
+  // hacia arriba o hacia abajo (según el espacio que quede en
+  // pantalla) y no se puede controlar con CSS. Por eso dibujamos
+  // nuestro propio desplegable arriba del <select> real, que queda
+  // oculto pero sigue siendo el que guarda el valor elegido: así el
+  // resto del código (movieSelect.value, evento 'change', etc.) no
+  // cambia. Si en el futuro se agregan opciones al <select>, el
+  // desplegable se actualiza solo.
+  // --------------------------------------------------------------
+  function crearDesplegable(select) {
+    if (!select) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'cselect';
+    select.parentNode.insertBefore(wrap, select);
+    wrap.appendChild(select);
+    select.classList.add('cselect-native');
+    select.tabIndex = -1;
+    select.setAttribute('aria-hidden', 'true');
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'cselect-btn';
+    btn.setAttribute('aria-haspopup', 'listbox');
+    btn.setAttribute('aria-expanded', 'false');
+    const label = document.createElement('span');
+    label.className = 'cselect-label';
+    btn.appendChild(label);
+
+    const list = document.createElement('ul');
+    list.className = 'cselect-list';
+    list.setAttribute('role', 'listbox');
+    list.hidden = true;
+
+    wrap.appendChild(btn);
+    wrap.appendChild(list);
+
+    function items() {
+      return Array.from(list.querySelectorAll('li'));
+    }
+
+    function render() {
+      list.innerHTML = '';
+      const primera = select.options[0];
+      const placeholder = primera && primera.value === '' ? primera.textContent : '';
+
+      Array.from(select.options).forEach((opt) => {
+        if (opt.value === '') return; // el placeholder no es una opción elegible
+        const li = document.createElement('li');
+        li.setAttribute('role', 'option');
+        li.tabIndex = -1;
+        li.dataset.value = opt.value;
+        li.textContent = opt.textContent;
+        if (opt.value === select.value) {
+          li.classList.add('selected');
+          li.setAttribute('aria-selected', 'true');
+        }
+        li.addEventListener('click', () => elegir(opt.value));
+        list.appendChild(li);
+      });
+
+      const elegida = select.options[select.selectedIndex];
+      label.textContent = select.value && elegida ? elegida.textContent : placeholder;
+      btn.classList.toggle('is-placeholder', !select.value);
+    }
+
+    function abrir() {
+      if (!list.children.length) return;
+      list.hidden = false;
+      wrap.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      const actual = list.querySelector('.selected');
+      if (actual) actual.scrollIntoView({ block: 'nearest' });
+    }
+
+    function cerrar() {
+      list.hidden = true;
+      wrap.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    function elegir(valor) {
+      select.value = valor;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      render();
+      cerrar();
+      btn.focus();
+    }
+
+    function enfocarItem(indice) {
+      const lista = items();
+      if (!lista.length) return;
+      const i = Math.max(0, Math.min(lista.length - 1, indice));
+      lista[i].focus();
+      lista[i].scrollIntoView({ block: 'nearest' });
+    }
+
+    btn.addEventListener('click', () => (list.hidden ? abrir() : cerrar()));
+
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        abrir();
+        const lista = items();
+        const sel = lista.findIndex((li) => li.classList.contains('selected'));
+        enfocarItem(sel >= 0 ? sel : 0);
+      }
+    });
+
+    list.addEventListener('keydown', (e) => {
+      const lista = items();
+      const i = lista.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        enfocarItem(i + 1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        enfocarItem(i - 1);
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (i >= 0) elegir(lista[i].dataset.value);
+      } else if (e.key === 'Escape') {
+        cerrar();
+        btn.focus();
+      }
+    });
+
+    // Cerrar al hacer click afuera
+    document.addEventListener('click', (e) => {
+      if (!wrap.contains(e.target)) cerrar();
+    });
+
+    // Si cambian las opciones del <select> (por ejemplo cuando llega la
+    // cartelera de TMDB), volvemos a dibujar la lista.
+    new MutationObserver(render).observe(select, { childList: true });
+
+    render();
+  }
+
+  crearDesplegable(movieSelect);
+  crearDesplegable(complejoSelect);
 
   // --------------------------------------------------------------
   // 1) COMPLEJO: no depende de ninguna API, se arma siempre.
@@ -122,45 +271,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------
-  // 2) DÍA: fechas reales (hoy + los próximos 6 días), tampoco
-  //    depende de ninguna API.
-  // --------------------------------------------------------------
-  try {
-    if (diaSelect) {
-      const dias = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-      const hoy = new Date();
-
-      for (let i = 0; i < 7; i++) {
-        const fecha = new Date(hoy);
-        fecha.setDate(hoy.getDate() + i);
-
-        const diaSemana = dias[fecha.getDay()];
-        const dd = String(fecha.getDate()).padStart(2, '0');
-        const mm = String(fecha.getMonth() + 1).padStart(2, '0');
-
-        const opt = document.createElement('option');
-        opt.value = fecha.toISOString().slice(0, 10); // yyyy-mm-dd
-        opt.textContent =
-          i === 0
-            ? `Hoy · ${diaSemana} ${dd}/${mm}`
-            : i === 1
-              ? `Mañana · ${diaSemana} ${dd}/${mm}`
-              : `${diaSemana} ${dd}/${mm}`;
-        diaSelect.appendChild(opt);
-      }
-    }
-  } catch (error) {
-    console.error('Error al armar el select de días:', error);
-  }
-
-  // --------------------------------------------------------------
-  // 3) PELÍCULA: se intenta traer la cartelera real de TMDB. Si
+  // 2) PELÍCULA: se intenta traer la cartelera real de TMDB. Si
   //    falla, se usa la lista de respaldo para que el select nunca
   //    quede vacío ni "cargando" para siempre.
   // --------------------------------------------------------------
   function llenarSelectConRespaldo() {
     if (!movieSelect) return;
-    movieSelect.innerHTML = '<option value="">Elegí una película</option>';
+    movieSelect.innerHTML = '<option value="" disabled selected hidden>Elegí una película</option>';
     CARTELERA_RESPALDO.forEach((titulo) => {
       const opt = document.createElement('option');
       opt.value = titulo;
@@ -189,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (resultados.length === 0) throw new Error('TMDB devolvió cartelera vacía');
 
-      movieSelect.innerHTML = '<option value="">Elegí una película</option>';
+      movieSelect.innerHTML = '<option value="" disabled selected hidden>Elegí una película</option>';
       resultados.forEach((peli) => {
         peliculasPorId[peli.id] = peli;
         const opt = document.createElement('option');
@@ -256,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
   cargarCarteleraCordoba();
 
   // --------------------------------------------------------------
-  // 4) ENVÍO DEL FORMULARIO
+  // 3) ENVÍO DEL FORMULARIO
   // --------------------------------------------------------------
   if (cineForm) {
     cineForm.addEventListener('submit', (e) => {
@@ -266,12 +383,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ? movieSelect.options[movieSelect.selectedIndex].textContent
         : '';
       const complejo = COMPLEJOS.find((c) => c.id === complejoSelect.value);
-      const diaLabel = diaSelect.options[diaSelect.selectedIndex]
-        ? diaSelect.options[diaSelect.selectedIndex].textContent
-        : '';
-      const horarioLabel = HORARIOS_LABEL[horarioSelect.value] || 'cualquier horario';
 
-      if (!movieSelect.value || !complejo || !diaSelect.value) return;
+      if (!movieSelect.value || !complejo) {
+        if (infoChipText) {
+          infoChipText.textContent = 'Elegí una película y un complejo para continuar.';
+          infoChip.classList.add('visible');
+        }
+        return;
+      }
 
       // Abrimos la cartelera oficial del complejo en una pestaña
       // nueva. No podemos completar la compra por él: cada cadena
@@ -285,8 +404,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (infoChipText) {
         infoChipText.textContent = esCinemark
-          ? `Te abrimos "${peliTitulo}" en Cinemark. Elegí ahí el complejo, el ${diaLabel} (${horarioLabel}) y tus asientos. Si la página no existe, buscala en cinemark.com.ar.`
-          : `Te abrimos la cartelera de ${complejo.nombre}. Buscá "${peliTitulo}" para el ${diaLabel} (${horarioLabel}) y elegí ahí tu función.`;
+          ? `Te abrimos "${peliTitulo}" en Cinemark. Elegí ahí el complejo, el día y tus asientos. Si la página no existe, buscala en cinemark.com.ar.`
+          : `Te abrimos la cartelera de ${complejo.nombre}. Buscá "${peliTitulo}" y elegí ahí el día y tu función.`;
         infoChip.classList.add('visible');
       }
     });

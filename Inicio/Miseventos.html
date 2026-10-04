@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <title>Próximamente | Cinemorfosis</title>
+    <title>Mis eventos | Cinemorfosis</title>
     <link rel="stylesheet" type="text/css" href="Inicio.css" />
+    <link rel="stylesheet" type="text/css" href="MisEventos.css" />
   </head>
   <body>
     <div class="subpage-header">
@@ -14,7 +15,7 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
       </a>
       <img src="../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
-      <h1>Disponibilidad</h1>
+      <h1>Mis eventos</h1>
 
       <div class="user-menu" style="margin-left: auto;">
         <button type="button" class="avatar-btn" id="avatarBtn" aria-haspopup="true" aria-expanded="false">
@@ -28,19 +29,31 @@
       </div>
     </div>
 
-    <div class="construction">
-      <div class="construction-icon"><ion-icon name="planet-outline"></ion-icon></div>
-      <h2 id="proximamenteTitulo">Aún no estamos disponibles en otras regiones</h2>
-      <p>
-        Por ahora Cinemorfosis solo está funcionando en Córdoba,
-        Argentina. Estamos trabajando para llegar a más lugares
-        pronto — próximamente vas a tener novedades.
-      </p>
-      <a href="Inicio.html" class="cta-volver">
-        <ion-icon name="location-outline"></ion-icon>
-        Volver a Córdoba, Argentina
-      </a>
-    </div>
+    <main class="ev-page">
+      <div class="ev-heading">
+        <h2>Tus eventos</h2>
+        <p id="evSubtitle">Los seminarios a los que te inscribiste.</p>
+      </div>
+
+      <!-- Las tarjetas las dibuja MisEventos.js a partir de lo guardado -->
+      <div class="ev-list" id="evList"></div>
+
+      <!-- Sin inscripciones todavía -->
+      <div class="ev-empty" id="evEmpty" hidden>
+        <ion-icon name="ticket-outline"></ion-icon>
+        <h3>Todavía no te inscribiste a ningún evento</h3>
+        <p>Cuando te inscribas a un seminario, va a aparecer acá.</p>
+        <a class="ev-btn" href="Seminarios/Seminarios.html">Ver seminarios</a>
+      </div>
+
+      <!-- Invitados: necesitan cuenta -->
+      <div class="ev-empty" id="evGate" hidden>
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <h3>Iniciá sesión para ver tus eventos</h3>
+        <p>Necesitás una cuenta para inscribirte a seminarios y guardarlos acá.</p>
+        <a class="ev-btn" href="../Login/Login.html">Iniciar sesión</a>
+      </div>
+    </main>
 
     <footer class="site-footer">
       <div class="film-strip film-strip--top" aria-hidden="true"></div>
@@ -48,15 +61,6 @@
     </footer>
 
     <script src="Inicio.js"></script>
-    <script>
-      // Si venimos de elegir un país en el selector de ubicación,
-      // personalizamos el título con el nombre de ese país.
-      const params = new URLSearchParams(window.location.search);
-      const region = params.get('region');
-      if (region) {
-        document.getElementById('proximamenteTitulo').textContent =
-          `Aún no estamos disponibles en ${region}`;
-      }
-    </script>
+    <script src="MisEventos.js"></script>
   </body>
 </html>

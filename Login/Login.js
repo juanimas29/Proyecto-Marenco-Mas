@@ -67,28 +67,77 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// ===== "Base de datos" de usuarios =====
+// Todavía no hay backend, así que las cuentas registradas se guardan en
+// localStorage (clave 'cinemorfosisUsers'). Cada cuenta es:
+//   { user, email, passHash }
+// La contraseña nunca se guarda en texto plano: se guarda su hash SHA-256.
+// Cuando haya backend real, solo hay que reemplazar estas funciones.
+const USERS_KEY = 'cinemorfosisUsers';
+
+function loadUsers() {
+  try {
+    return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+  } catch (err) {
+    return [];
+  }
+}
+
+function saveUsers(users) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+async function hashPassword(text) {
+  // crypto.subtle solo existe en contextos seguros (https / localhost).
+  if (window.crypto && window.crypto.subtle) {
+    const data = new TextEncoder().encode(text);
+    const buf = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(buf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+  }
+  return 'plain:' + text; // respaldo si el navegador no soporta crypto.subtle
+}
+
+function normalize(value) {
+  return value.trim().toLowerCase();
+}
+
+function showMessage(el, text, type) {
+  el.textContent = text;
+  el.className = 'form-message' + (type ? ' ' + type : '');
+}
+
 // Formulario de inicio de sesión
 const signInForm = document.getElementById('signInForm');
 const signInMessage = document.getElementById('signInMessage');
 
-signInForm.addEventListener('submit', (e) => {
+signInForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const user = document.getElementById('signInUser').value;
-  const pass = document.getElementById('signInPassword').value;
+  // Se puede ingresar con el nombre de usuario O con el email registrado.
+  const identifier = normalize(document.getElementById('signInUser').value);
+  const passHash = await hashPassword(
+    document.getElementById('signInPassword').value
+  );
 
-  if (user === 'Usuario' && pass === '123') {
-  signInMessage.textContent = '¡Bienvenido! Iniciando sesión...';
-  signInMessage.className = 'form-message success';
+  const account = loadUsers().find(
+    (u) =>
+      (normalize(u.user) === identifier || normalize(u.email) === identifier) &&
+      u.passHash === passHash
+  );
 
-  localStorage.setItem('cinemorfosisSession', 'user');
+  if (account) {
+    showMessage(signInMessage, '¡Bienvenido, ' + account.user + '! Iniciando sesión...', 'success');
 
-  setTimeout(() => {
+    localStorage.setItem('cinemorfosisSession', 'user');
+    localStorage.setItem('cinemorfosisCurrentUser', account.user);
+
+    setTimeout(() => {
       window.location.href = '../Inicio/Inicio.html';
     }, 1000);
   } else {
-    signInMessage.textContent = 'Usuario o contraseña incorrectos';
-    signInMessage.className = 'form-message error';
+    showMessage(signInMessage, 'Usuario o contraseña incorrectos', 'error');
   }
 });
 
@@ -107,15 +156,32 @@ guestLink.addEventListener('click', (e) => {
 const signUpForm = document.getElementById('signUpForm');
 const signUpMessage = document.getElementById('signUpMessage');
 
-signUpForm.addEventListener('submit', (e) => {
+signUpForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  signUpMessage.textContent = '¡Cuenta creada con éxito! Ya podés iniciar sesión.';
-  signUpMessage.className = 'form-message success';
+
+  const user = document.getElementById('signUpUser').value.trim();
+  const email = document.getElementById('signUpEmail').value.trim();
+  const password = document.getElementById('signUpPassword').value;
+
+  const users = loadUsers();
+
+  if (users.some((u) => normalize(u.user) === normalize(user))) {
+    showMessage(signUpMessage, 'Ese nombre de usuario ya está en uso.', 'error');
+    return;
+  }
+  if (users.some((u) => normalize(u.email) === normalize(email))) {
+    showMessage(signUpMessage, 'Ya existe una cuenta con ese email.', 'error');
+    return;
+  }
+
+  users.push({ user, email, passHash: await hashPassword(password) });
+  saveUsers(users);
+
+  showMessage(signUpMessage, '¡Cuenta creada con éxito! Ya podés iniciar sesión.', 'success');
 
   setTimeout(() => {
     signUpForm.reset();
-    signUpMessage.textContent = '';
-    signUpMessage.className = 'form-message';
+    showMessage(signUpMessage, '', '');
     wrapper.dataset.view = 'signin';
   }, 1500);
 });
@@ -126,22 +192,33 @@ const newPassword = document.getElementById('newPassword');
 const confirmPassword = document.getElementById('confirmPassword');
 const forgotMessage = document.getElementById('forgotMessage');
 
-forgotForm.addEventListener('submit', (e) => {
+forgotForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   if (newPassword.value !== confirmPassword.value) {
-    forgotMessage.textContent = 'Las contraseñas no coinciden.';
-    forgotMessage.className = 'form-message error';
+    showMessage(forgotMessage, 'Las contraseñas no coinciden.', 'error');
     return;
   }
 
-  forgotMessage.textContent = '¡Listo! Ya podés iniciar sesión con tu nueva contraseña.';
-  forgotMessage.className = 'form-message success';
+  // El email tiene que ser el mismo con el que se registró la cuenta.
+  const email = normalize(document.getElementById('forgotEmail').value);
+  const users = loadUsers();
+  const account = users.find((u) => normalize(u.email) === email);
+
+  if (!account) {
+    showMessage(forgotMessage, 'No encontramos ninguna cuenta con ese email.', 'error');
+    return;
+  }
+
+  // Reemplaza la contraseña guardada: desde ahora se entra con la nueva.
+  account.passHash = await hashPassword(newPassword.value);
+  saveUsers(users);
+
+  showMessage(forgotMessage, '¡Listo! Ya podés iniciar sesión con tu nueva contraseña.', 'success');
 
   setTimeout(() => {
     forgotForm.reset();
-    forgotMessage.textContent = '';
-    forgotMessage.className = 'form-message';
+    showMessage(forgotMessage, '', '');
     wrapper.dataset.view = 'signin';
   }, 1500);
 });

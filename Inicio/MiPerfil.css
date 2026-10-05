@@ -1,0 +1,342 @@
+.pf-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 36px 20px 60px;
+  min-height: 60vh;
+}
+
+.pf-heading h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--secondary);
+}
+
+.pf-heading p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #6b655b;
+}
+
+/* ---------- Resumen con forma de entrada ---------- */
+.pf-summary {
+  display: flex;
+  margin-top: 26px;
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(112, 0, 0, 0.10);
+  overflow: hidden;
+}
+
+.pf-stub {
+  flex: 0 0 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--secondary), var(--primary));
+  border-right: 2px dashed var(--info);
+  position: relative;
+}
+
+.pf-stub::before,
+.pf-stub::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  width: 18px;
+  height: 18px;
+  background: var(--bg);
+  border-radius: 50%;
+}
+.pf-stub::before { top: -9px; }
+.pf-stub::after { bottom: -9px; }
+
+.pf-initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--secondary);
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.pf-summary-body {
+  flex: 1;
+  min-width: 0;
+  padding: 22px 24px;
+}
+
+.pf-summary-body h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.pf-meta {
+  list-style: none;
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 13.5px;
+  color: #4d483f;
+}
+.pf-meta li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-wrap: anywhere;
+}
+.pf-meta ion-icon {
+  flex-shrink: 0;
+  font-size: 16px;
+  color: var(--secondary);
+}
+
+.pf-stats {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pf-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--info);
+  color: var(--secondary);
+}
+.pf-stat ion-icon { font-size: 15px; }
+
+.pf-summary-actions {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--info);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pf-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.pf-logout ion-icon { font-size: 17px; }
+.pf-logout:hover {
+  background: var(--primary);
+  color: var(--bg);
+}
+
+.pf-link {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+}
+.pf-link:hover { text-decoration: underline; }
+
+/* ---------- Tarjetas de secciones ---------- */
+.pf-card {
+  margin-top: 22px;
+  padding: 24px;
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(112, 0, 0, 0.10);
+}
+
+.pf-card > h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--info);
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--secondary);
+}
+.pf-card > h3 ion-icon { font-size: 20px; }
+
+.pf-field { margin-bottom: 16px; }
+
+.pf-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4d483f;
+}
+
+.pf-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  background: var(--bg);
+  border: 2px solid var(--info);
+  border-radius: 12px;
+  transition: border-color .15s ease, background .15s ease;
+}
+.pf-input:focus-within {
+  border-color: var(--primary);
+  background: var(--surface);
+}
+.pf-input > ion-icon {
+  font-size: 18px;
+  color: var(--secondary);
+  flex-shrink: 0;
+}
+.pf-input input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+.pf-eye {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  background: transparent;
+  border: none;
+  color: var(--secondary);
+  font-size: 19px;
+  cursor: pointer;
+}
+.pf-eye:hover { color: var(--primary); }
+
+/* ---------- Mensajes ---------- */
+.pf-message {
+  min-height: 20px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.pf-message.error { color: var(--primary); }
+.pf-message.success { color: #1f7a3d; }
+
+.pf-note {
+  margin-bottom: 16px;
+  font-size: 13.5px;
+  color: #6b655b;
+}
+
+/* ---------- Botones ---------- */
+.pf-btn {
+  display: inline-block;
+  padding: 13px 28px;
+  border: none;
+  border-radius: 999px;
+  background: var(--secondary);
+  color: var(--bg);
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 14.5px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 5px 0 var(--ink);
+  transition: background .15s ease, transform .1s ease, box-shadow .1s ease;
+}
+.pf-btn:hover { background: var(--primary); }
+.pf-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--ink);
+}
+
+.pf-btn--danger { background: var(--primary); }
+.pf-btn--danger:hover { background: var(--secondary); }
+
+.pf-btn--ghost {
+  background: transparent;
+  color: var(--secondary);
+  box-shadow: none;
+  border: 2px solid var(--info);
+}
+.pf-btn--ghost:hover {
+  background: var(--bg);
+  color: var(--secondary);
+}
+.pf-btn--ghost:active { transform: none; box-shadow: none; }
+
+.pf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------- Zona de peligro ---------- */
+.pf-danger { border: 1px solid rgba(205, 26, 11, 0.25); }
+.pf-danger > h3 { color: var(--primary); }
+.pf-danger form { margin-top: 20px; }
+.pf-danger form[hidden] { display: none; }
+
+/* ---------- Invitados / cuenta no encontrada ---------- */
+.pf-gate {
+  margin-top: 40px;
+  text-align: center;
+  padding: 40px 20px;
+}
+.pf-gate[hidden],
+#pfContent[hidden] { display: none; }
+
+.pf-gate > ion-icon {
+  font-size: 54px;
+  color: var(--secondary);
+}
+.pf-gate h3 {
+  margin-top: 10px;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 21px;
+  color: var(--ink);
+}
+.pf-gate p {
+  margin: 6px auto 20px;
+  max-width: 380px;
+  font-size: 14px;
+  color: #6b655b;
+}
+
+@media (max-width: 560px) {
+  .pf-stub { flex-basis: 84px; }
+  .pf-initial { width: 52px; height: 52px; font-size: 24px; }
+  .pf-summary-body { padding: 18px 16px; }
+  .pf-card { padding: 20px 16px; }
+  .pf-btn { width: 100%; text-align: center; }
+  .pf-summary-actions { flex-direction: column; align-items: stretch; text-align: center; }
+  .pf-logout { justify-content: center; }
+  .pf-actions .pf-btn { width: 100%; }
+}

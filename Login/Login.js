@@ -170,7 +170,12 @@ signUpForm.addEventListener('submit', async (e) => {
     return;
   }
 
-  users.push({ user, email, passHash: await hashPassword(password) });
+  users.push({
+    user,
+    email,
+    passHash: await hashPassword(password),
+    createdAt: new Date().toISOString(), // fecha de registro (se muestra en Mi perfil)
+  });
   saveUsers(users);
 
   showMessage(signUpMessage, '¡Cuenta creada con éxito! Ya podés iniciar sesión.', 'success');

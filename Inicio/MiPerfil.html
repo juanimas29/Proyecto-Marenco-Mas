@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Mi perfil | Cinemorfosis</title>
+    <link rel="icon" type="image/png" href="../Imagenes/Variante Logo.png" />
+    <link rel="stylesheet" type="text/css" href="Inicio.css" />
+    <link rel="stylesheet" type="text/css" href="MiPerfil.css" />
+  </head>
+  <body>
+    <div class="subpage-header">
+      <a href="Inicio.html" class="back-btn" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <img src="../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
+      <h1>Mi perfil</h1>
+
+      <div class="user-menu" style="margin-left: auto;">
+        <button type="button" class="avatar-btn" id="avatarBtn" aria-haspopup="true" aria-expanded="false">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </button>
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <a href="MiPerfil.html"><ion-icon name="person-outline"></ion-icon> Mi perfil</a>
+          <a href="MisEventos.html"><ion-icon name="ticket-outline"></ion-icon> Mis eventos</a>
+          <a href="../Login/Login.html" class="logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+
+    <main class="pf-page">
+      <!-- Contenido para personas con sesión iniciada -->
+      <div id="pfContent" hidden>
+        <div class="pf-heading">
+          <h2>Mi perfil</h2>
+          <p>Administrá los datos de tu cuenta.</p>
+        </div>
+
+        <!-- Resumen con forma de entrada -->
+        <section class="pf-summary" aria-label="Resumen de la cuenta">
+          <div class="pf-stub">
+            <span class="pf-initial" id="pfInitial">?</span>
+          </div>
+          <div class="pf-summary-body">
+            <h3 id="pfName">Usuario</h3>
+            <ul class="pf-meta">
+              <li>
+                <ion-icon name="mail-outline"></ion-icon>
+                <span id="pfEmail"></span>
+              </li>
+              <li>
+                <ion-icon name="calendar-outline"></ion-icon>
+                <span>Miembro desde <strong id="pfSince"></strong></span>
+              </li>
+            </ul>
+            <div class="pf-stats">
+              <span class="pf-stat">
+                <ion-icon name="ticket-outline"></ion-icon>
+                <strong id="pfStatTotal">0</strong> inscripciones
+              </span>
+              <span class="pf-stat">
+                <ion-icon name="calendar-outline"></ion-icon>
+                <strong id="pfStatUpcoming">0</strong> próximos
+              </span>
+            </div>
+            <div class="pf-summary-actions">
+              <a class="pf-link" href="MisEventos.html">Ver mis eventos</a>
+              <button type="button" class="pf-logout" id="logoutBtn">
+                <ion-icon name="log-out-outline"></ion-icon> Cerrar sesión
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Datos de la cuenta -->
+        <section class="pf-card">
+          <h3><ion-icon name="person-outline"></ion-icon> Datos de la cuenta</h3>
+          <form id="profileForm" novalidate>
+            <div class="pf-field">
+              <label for="pfUser">Usuario</label>
+              <div class="pf-input">
+                <ion-icon name="person-outline"></ion-icon>
+                <input type="text" id="pfUser" maxlength="30" autocomplete="username" required />
+              </div>
+            </div>
+            <div class="pf-field">
+              <label for="pfMail">Email</label>
+              <div class="pf-input">
+                <ion-icon name="mail-outline"></ion-icon>
+                <input type="email" id="pfMail" autocomplete="email" required />
+              </div>
+            </div>
+            <p class="pf-message" id="profileMessage" aria-live="polite"></p>
+            <button type="submit" class="pf-btn">Guardar cambios</button>
+          </form>
+        </section>
+
+        <!-- Cambiar contraseña -->
+        <section class="pf-card">
+          <h3><ion-icon name="lock-closed-outline"></ion-icon> Cambiar contraseña</h3>
+          <form id="passwordForm" novalidate>
+            <div class="pf-field">
+              <label for="pfCurrentPass">Contraseña actual</label>
+              <div class="pf-input">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input type="password" id="pfCurrentPass" autocomplete="current-password" required />
+                <button type="button" class="pf-eye" aria-label="Mostrar contraseña">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </button>
+              </div>
+            </div>
+            <div class="pf-field">
+              <label for="pfNewPass">Nueva contraseña</label>
+              <div class="pf-input">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input type="password" id="pfNewPass" minlength="6" autocomplete="new-password" required />
+                <button type="button" class="pf-eye" aria-label="Mostrar contraseña">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </button>
+              </div>
+            </div>
+            <div class="pf-field">
+              <label for="pfConfirmPass">Confirmar nueva contraseña</label>
+              <div class="pf-input">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input type="password" id="pfConfirmPass" minlength="6" autocomplete="new-password" required />
+                <button type="button" class="pf-eye" aria-label="Mostrar contraseña">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </button>
+              </div>
+            </div>
+            <p class="pf-message" id="passwordMessage" aria-live="polite"></p>
+            <button type="submit" class="pf-btn">Actualizar contraseña</button>
+          </form>
+        </section>
+
+        <!-- Eliminar cuenta -->
+        <section class="pf-card pf-danger">
+          <h3><ion-icon name="warning-outline"></ion-icon> Eliminar cuenta</h3>
+          <p class="pf-note">
+            Se borran tu cuenta y tus inscripciones a seminarios. Esta acción no se puede deshacer.
+          </p>
+
+          <button type="button" class="pf-btn pf-btn--danger" id="deleteStart">Eliminar mi cuenta</button>
+
+          <form id="deleteForm" hidden novalidate>
+            <div class="pf-field">
+              <label for="pfDeletePass">Ingresá tu contraseña para confirmar</label>
+              <div class="pf-input">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input type="password" id="pfDeletePass" autocomplete="current-password" required />
+                <button type="button" class="pf-eye" aria-label="Mostrar contraseña">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </button>
+              </div>
+            </div>
+            <p class="pf-message" id="deleteMessage" aria-live="polite"></p>
+            <div class="pf-actions">
+              <button type="submit" class="pf-btn pf-btn--danger">Sí, eliminar definitivamente</button>
+              <button type="button" class="pf-btn pf-btn--ghost" id="deleteCancel">Cancelar</button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <!-- Invitados: necesitan cuenta -->
+      <div class="pf-gate" id="pfGate" hidden>
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <h3>Iniciá sesión para ver tu perfil</h3>
+        <p>Necesitás una cuenta para guardar tus datos y tus inscripciones.</p>
+        <a class="pf-btn" href="../Login/Login.html">Iniciar sesión</a>
+      </div>
+
+      <!-- Sesión iniciada pero la cuenta no existe (sesión vieja o cuenta borrada) -->
+      <div class="pf-gate" id="pfMissing" hidden>
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <h3>No encontramos tu cuenta</h3>
+        <p>Tu sesión quedó desactualizada. Volvé a iniciar sesión para continuar.</p>
+        <a class="pf-btn" href="../Login/Login.html" id="pfMissingLogin">Iniciar sesión</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="film-strip film-strip--top" aria-hidden="true"></div>
+      <p>Cinemorfosis · Hecho por cinéfilos, para cinéfilos</p>
+    </footer>
+
+    <script src="Inicio.js"></script>
+    <script src="MiPerfil.js"></script>
+  </body>
+</html>

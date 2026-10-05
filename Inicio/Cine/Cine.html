@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <title>Próximamente | Cinemorfosis</title>
-    <link rel="icon" type="image/png" href="../Imagenes/Variante Logo.png" />
-    <link rel="stylesheet" type="text/css" href="Inicio.css" />
+    <title>Cine | Cinemorfosis</title>
+    <link rel="icon" type="image/png" href="../../Imagenes/Variante Logo.png" />
+    <link rel="stylesheet" type="text/css" href="../Inicio.css" />
+    <link rel="stylesheet" type="text/css" href="Cine.css?v=3" />
   </head>
   <body>
     <div class="subpage-header">
-      <a href="Inicio.html" class="back-btn" aria-label="Volver">
+      <a href="../Inicio.html" class="back-btn" aria-label="Volver">
         <ion-icon name="arrow-back-outline"></ion-icon>
       </a>
-      <img src="../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
-      <h1>Disponibilidad</h1>
+      <img src="../../Imagenes/Variante Logo.png" alt="Cinemorfosis" />
+      <h1>Cine</h1>
 
       <div class="user-menu" style="margin-left: auto;">
         <button type="button" class="avatar-btn" id="avatarBtn" aria-haspopup="true" aria-expanded="false">
@@ -23,40 +24,92 @@
         </button>
         <div class="avatar-dropdown" id="avatarDropdown">
           <a href="#"><ion-icon name="person-outline"></ion-icon> Mi perfil</a>
-          <a href="MisEventos.html"><ion-icon name="ticket-outline"></ion-icon> Mis eventos</a>
-          <a href="../Login/Login.html" class="logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</a>
+          <a href="../MisEventos.html"><ion-icon name="ticket-outline"></ion-icon> Mis eventos</a>
+          <a href="../../Login/Login.html" class="logout"><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</a>
         </div>
       </div>
     </div>
 
-    <div class="construction">
-      <div class="construction-icon"><ion-icon name="planet-outline"></ion-icon></div>
-      <h2 id="proximamenteTitulo">Aún no estamos disponibles en otras regiones</h2>
-      <p>
-        Por ahora Cinemorfosis solo está funcionando en Córdoba,
-        Argentina. Estamos trabajando para llegar a más lugares
-        pronto — próximamente vas a tener novedades.
+    <section class="cine-selector">
+      <div class="cine-selector-heading">
+        <h2>Sacá tus entradas</h2>
+        <p>
+          Elegí la película y el complejo. Te vamos a abrir la página
+          oficial de venta de entradas de ese cine en una pestaña nueva
+          para que termines de elegir día, función, sala y asientos.
+        </p>
+      </div>
+
+      <form class="cine-selector-form" id="cineSelectorForm">
+        <div class="cine-field">
+          <label for="cineMovieSelect">Película</label>
+          <select id="cineMovieSelect">
+            <option value="" disabled selected hidden>Cargando cartelera...</option>
+          </select>
+        </div>
+
+        <div class="cine-field">
+          <label for="cineComplejoSelect">Complejo</label>
+          <select id="cineComplejoSelect">
+            <option value="" disabled selected hidden>Elegí un complejo</option>
+          </select>
+        </div>
+
+        <button type="submit" class="cine-submit-btn">
+          <ion-icon name="ticket-outline"></ion-icon>
+          Buscar entradas
+        </button>
+
+        <div class="cine-info-chip" id="cineInfoChip">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span id="cineInfoChipText"></span>
+        </div>
+      </form>
+
+      <p class="cine-disclaimer">
+        La cartelera se trae de TMDB y puede no coincidir 100% con lo
+        que cada cine tiene programado ese día. La compra y elección
+        de asientos se hace en el sitio oficial de cada complejo,
+        porque no manejan una API pública para reservar desde afuera.
       </p>
-      <a href="Inicio.html" class="cta-volver">
-        <ion-icon name="location-outline"></ion-icon>
-        Volver a Córdoba, Argentina
+    </section>
+
+    <section class="cine-map">
+      <div class="cine-map-heading">
+        <h2>Complejos de cine cerca tuyo</h2>
+        <p>
+          Explorá el mapa con todos los complejos de cine de Córdoba
+          que tenemos cargados: Mirá dónde queda cada complejo y elegí el más cómodo para vos.
+        </p>
+      </div>
+      <div class="cine-map-frame">
+        <iframe
+          src="https://www.google.com/maps/d/embed?mid=11uGjHHoDv7Go9yRqHnN7wFYBlm_ZYao&hl=es&ll=-31.406837941909863%2C-64.2224273321835&z=12"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mapa de complejos de cine en Córdoba"
+        ></iframe>
+      </div>
+      <a
+        class="cine-map-link"
+        href="https://www.google.com/maps/d/edit?hl=es&mid=11uGjHHoDv7Go9yRqHnN7wFYBlm_ZYao&ll=-31.406837941909863%2C-64.2224273321835&z=12"
+        target="_blank"
+        rel="noopener"
+      >
+        <ion-icon name="expand-outline"></ion-icon>
+        Ver mapa completo en Google Maps
       </a>
-    </div>
+    </section>
 
     <footer class="site-footer">
       <div class="film-strip film-strip--top" aria-hidden="true"></div>
       <p>Cinemorfosis · Hecho por cinéfilos, para cinéfilos</p>
     </footer>
 
-    <script src="Inicio.js"></script>
-    <script>
-      // Personalizar comentario con el país seleccionado.
-      const params = new URLSearchParams(window.location.search);
-      const region = params.get('region');
-      if (region) {
-        document.getElementById('proximamenteTitulo').textContent =
-          `Aún no estamos disponibles en ${region}`;
-      }
-    </script>
+    <script src="../Inicio.js"></script>
+    <script src="Cine.js?v=3"></script>
   </body>
 </html>

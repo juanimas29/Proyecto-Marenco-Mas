@@ -1,0 +1,40 @@
+/* Fuentes de Cinemorfosis (igual que en Login.css e Inicio.css) */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Paleta oficial Cinemorfosis */
+  --ink: #000000;        /* Negro — texto principal y contornos */
+  --secondary: #700000;  /* Burdeos Profundo — bordes, sombras, texto secundario */
+  --primary: #CD1A0B;    /* Rojo Vibrante — botones e interacciones */
+  --bg: #FFFFF6;         /* Off-White — fondo principal */
+  --surface: #FFFFFF;    /* blanco puro — superficie de inputs */
+  --adv: #FFC33F;        /* acento ámbar — detalles de boleto */
+  --error: #B3261E;
+  --ok: #90E1FF;
+  --info: #E0D2C9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* Tira de película (pieza compartida por login, hero y footer) */
+.film-strip {
+  width: 100%;
+  height: 14px;
+  background: var(--ink);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--bg) 0 8px,
+    transparent 8px 20px
+  );
+  background-position: 10px center;
+}
